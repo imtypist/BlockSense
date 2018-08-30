@@ -5,3 +5,7 @@ var taskList = avalon.define({
     	{"status":0,"contract":"0X4825811A5E63458953CFF8F5...","name":"感知任务6","description":"收集闵行校区内SSID为SJTU的WiFi信号强度"}
     ]
 })
+
+$("#add_contract_var").on("click",function(){
+	$(this).before($("#contract_var").prop("outerHTML"));
+})

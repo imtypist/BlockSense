@@ -68,22 +68,59 @@
               <h4 class="modal-title" id="myLargeModalLabel">发布新感知任务</h4>
             </div>
             <div class="modal-body">
-              <div class="input-group" style="margin-bottom: 15px;margin-top: 15px;">
+              <h4>我没有代码基础，使用平台提供的合约代码模板</h4>
+              <div class="input-group" style="margin-bottom: 15px">
                 <span class="input-group-addon" id="sizing-addon1">合约名字</span>
                 <input type="text" class="form-control" placeholder="contract name" aria-describedby="sizing-addon1">
-              </div>
-              <div class="input-group" style="margin-bottom: 15px">
-                <span class="input-group-addon" id="sizing-addon2">合约代码</span>
-                <input type="text" class="form-control" placeholder="" aria-describedby="sizing-addon2">
-              </div>
-              <div class="input-group" style="margin-bottom: 15px">
-                <span class="input-group-addon" id="sizing-addon3">预计收集的数据量</span>
-                <input type="text" class="form-control" placeholder="" aria-describedby="sizing-addon3">
               </div>
               <div class="input-group" style="margin-bottom: 15px">
                 <span class="input-group-addon">任务奖励Token</span>
                 <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
                 <span class="input-group-addon">gas</span>
+              </div>
+              <div class="input-group" style="margin-bottom: 15px">
+                <span class="input-group-addon" id="sizing-addon2">预计收集的数据量</span>
+                <input type="text" class="form-control" placeholder="" aria-describedby="sizing-addon3">
+              </div>
+              <div class="input-group" style="margin-bottom: 15px">
+                <span class="input-group-addon" id="sizing-addon4">数据质量检查策略</span>
+                <input type="text" class="form-control" placeholder="Boolean" aria-describedby="sizing-addon3">
+              </div>
+              <div class="input-group" style="margin-bottom: 15px" id="contract_var">
+                <div class="input-group-btn">
+                  <button type="button" class="btn btn-default">int</button>
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">int</a></li>
+                    <li><a href="#">uint</a></li>
+                    <li><a href="#">bool</a></li>
+                    <li><a href="#">address</a></li>
+                  </ul>
+                </div>
+                <div class="input-group-btn">
+                  <button type="button" class="btn btn-default">public</button>
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">public</a></li>
+                    <li><a href="#">private</a></li>
+                  </ul>
+                </div>
+                <input type="text" class="form-control" placeholder="variable name">
+              </div><!-- /input-group -->
+              <button type="button" class="btn btn-default" id="add_contract_var">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 新增一个变量
+              </button>
+              <hr>
+              <h4>我有代码基础，使用自定义合约代码</h4>
+              <div class="input-group" style="margin-bottom: 15px">
+                <span class="input-group-addon" id="sizing-addon3">合约代码</span>
+                <input type="text" class="form-control" placeholder="contract name" aria-describedby="sizing-addon1">
               </div>
               <div class="progress">
                 <div class="progress-bar progress-bar-success progress-bar-striped" style="width: 50%">
