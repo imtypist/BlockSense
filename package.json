@@ -15,8 +15,8 @@
   "license": "ISC",
   "devDependencies": {
     "electron": "^2.0.7",
+    "electron-rebuild": "^1.8.2",
     "ipfs": "^0.31.7",
-    "ipfs-api": "^24.0.1",
     "solc": "^0.4.24"
   }
 }

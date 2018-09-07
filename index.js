@@ -1,4 +1,9 @@
 const {app, BrowserWindow} = require('electron')
+const fs = require('fs')
+const solc = require('solc')
+
+const IPFS = require('ipfs')
+const node = new IPFS()
   
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -49,3 +54,15 @@ app.on('activate', () => {
 
 // 在这个文件中，你可以续写应用剩下主进程代码。
 // 也可以拆分成几个文件，然后用 require 导入。
+
+// 编译合约
+// let source = fs.readFileSync("./dist/contracts/taskManagement.sol", 'utf8')
+// console.log('compiling contract...');
+// let compiledContract = solc.compile(source);
+// console.log('done');
+
+// for (let contractName in compiledContract.contracts) {
+//     var bytecode = compiledContract.contracts[contractName].bytecode;
+//     var abi = JSON.parse(compiledContract.contracts[contractName].interface);
+// }
+// console.log(abi)

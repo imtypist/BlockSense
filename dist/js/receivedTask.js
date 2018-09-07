@@ -6,3 +6,10 @@ var taskList = avalon.define({
         {"status":0,"contract":"0X4825811A5E63458953CFF8F5...","name":"感知任务9","description":"收集闵行校区内SSID为SJTU的WiFi信号强度"},
     ]
 })
+
+var ipfs = window.IpfsApi('localhost', '5001');
+var Buffer = window.IpfsApi().Buffer;
+
+ipfs.add(Buffer.from("123")).then(function(err,res){
+	console.log(res);
+})
