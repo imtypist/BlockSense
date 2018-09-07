@@ -68,10 +68,13 @@
               <h4 class="modal-title" id="myLargeModalLabel">发布新感知任务</h4>
             </div>
             <div class="modal-body">
-              <h4>我没有代码基础，使用平台提供的合约代码模板</h4>
               <div class="input-group" style="margin-bottom: 15px">
                 <span class="input-group-addon" id="sizing-addon1">合约名字</span>
                 <input type="text" class="form-control" placeholder="contract name" aria-describedby="sizing-addon1">
+              </div>
+              <div class="input-group" style="margin-bottom: 15px">
+                <span class="input-group-addon" id="sizing-addon5">任务描述</span>
+                <input type="text" class="form-control" placeholder="Boolean" aria-describedby="sizing-addon3">
               </div>
               <div class="input-group" style="margin-bottom: 15px">
                 <span class="input-group-addon">任务奖励Token</span>
@@ -88,14 +91,14 @@
               </div>
               <div class="input-group" style="margin-bottom: 15px" id="contract_var">
                 <div class="input-group-btn">
-                  <button type="button" class="btn btn-default">int</button>
+                  <button type="button" class="btn btn-default">uint</button>
                   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="caret"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                   </button>
                   <ul class="dropdown-menu">
-                    <li><a href="#">int</a></li>
                     <li><a href="#">uint</a></li>
+                    <li><a href="#">string</a></li>
                     <li><a href="#">bool</a></li>
                     <li><a href="#">address</a></li>
                   </ul>
@@ -113,15 +116,9 @@
                 </div>
                 <input type="text" class="form-control" placeholder="variable name">
               </div><!-- /input-group -->
-              <button type="button" class="btn btn-default" id="add_contract_var">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 新增一个变量
+              <button type="button" class="btn btn-info" id="add_contract_var" style="margin-bottom: 15px">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 新增变量
               </button>
-              <hr>
-              <h4>我有代码基础，使用自定义合约代码</h4>
-              <div class="input-group" style="margin-bottom: 15px">
-                <span class="input-group-addon" id="sizing-addon3">合约代码</span>
-                <input type="text" class="form-control" placeholder="contract name" aria-describedby="sizing-addon1">
-              </div>
               <div class="progress">
                 <div class="progress-bar progress-bar-success progress-bar-striped" style="width: 50%">
                   <span><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> 合约编译通过</span>
