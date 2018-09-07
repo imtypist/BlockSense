@@ -1,15 +1,13 @@
 const {app, BrowserWindow} = require('electron')
-const fs = require('fs')
-const solc = require('solc')
-
-const IPFS = require('ipfs')
-const node = new IPFS()
   
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
 
 function createWindow () {
+	webPreferences: {
+        nodeIntegration: false
+    }
 	// 创建浏览器窗口。
 	win = new BrowserWindow({width: 1200, height: 700, resizable: false})
 
@@ -54,6 +52,11 @@ app.on('activate', () => {
 
 // 在这个文件中，你可以续写应用剩下主进程代码。
 // 也可以拆分成几个文件，然后用 require 导入。
+const fs = require('fs')
+const solc = require('solc')
+
+const IPFS = require('ipfs')
+const node = new IPFS()
 
 // 编译合约
 // let source = fs.readFileSync("./dist/contracts/taskManagement.sol", 'utf8')

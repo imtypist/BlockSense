@@ -7,7 +7,7 @@ var taskList = avalon.define({
     ]
 })
 
-var ipfs = window.IpfsApi('localhost', '5001');
+var ipfs = window.IpfsApi('127.0.0.1', '5002');
 var Buffer = window.IpfsApi().Buffer;
 
 ipfs.add(Buffer.from("123")).then(function(err,res){
