@@ -58,14 +58,35 @@ const solc = require('solc')
 const IPFS = require('ipfs')
 const node = new IPFS()
 
-// 编译合约
-// let source = fs.readFileSync("./dist/contracts/taskManagement.sol", 'utf8')
-// console.log('compiling contract...');
-// let compiledContract = solc.compile(source);
-// console.log('done');
+node.on('ready', async () => {
+  const version = await node.version();
+  console.log('Version:', version.version);
+});
 
-// for (let contractName in compiledContract.contracts) {
-//     var bytecode = compiledContract.contracts[contractName].bytecode;
-//     var abi = JSON.parse(compiledContract.contracts[contractName].interface);
-// }
-// console.log(abi)
+// 存数据
+function addSensedData(sensedData){
+  const filesAdded = await node.files.add({
+    content: Buffer.from(sensedData)
+  })
+  console.log('Added file:', filesAdded[0].path, filesAdded[0].hash)
+}
+
+// 取数据
+function catSensedData(ipfsHash){
+  const fileBuffer = await node.files.cat(ipfsHash);
+  console.log('Added file contents:', fileBuffer.toString())
+}
+
+// 编译合约
+function compileContract(contract_name){
+	let source = fs.readFileSync("./dist/contracts/" + contract_name + ".sol", 'utf8')
+	console.log('compiling contract...');
+	let compiledContract = solc.compile(source);
+	console.log('done');
+
+	for (let contractName in compiledContract.contracts) {
+	    var bytecode = compiledContract.contracts[contractName].bytecode;
+	    var abi = JSON.parse(compiledContract.contracts[contractName].interface);
+	}
+	console.log(abi)
+}
