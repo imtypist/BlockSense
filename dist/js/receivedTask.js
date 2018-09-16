@@ -6,3 +6,11 @@ var taskList = avalon.define({
         {"status":0,"contract":"0X4825811A5E63458953CFF8F5...","name":"感知任务9","description":"收集闵行校区内SSID为SJTU的WiFi信号强度"},
     ]
 })
+
+const {ipcRenderer} = require('electron')
+
+$("#submitSensedData").on("click",function(){
+	var dataHash = ipcRenderer.sendSync('synchronous-addSensedData', 'hello world');
+	console.log(dataHash)
+	console.log(ipcRenderer.sendSync('synchronous-catSensedData', dataHash))
+})

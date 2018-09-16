@@ -50,8 +50,25 @@ app.on('activate', () => {
 	}
 })
 
-// 在这个文件中，你可以续写应用剩下主进程代码。
-// 也可以拆分成几个文件，然后用 require 导入。
+// 在主进程中.
+const {ipcMain} = require('electron')
+// https://electronjs.org/docs/api/ipc-main
+  
+ipcMain.on('synchronous-addSensedData', (event, arg) => {
+  // console.log(arg)
+  addSensedData(arg).then(dataHash =>{
+  	event.returnValue = dataHash;
+  })
+})
+
+ipcMain.on('synchronous-catSensedData', (event, arg) => {
+  // console.log(arg)
+  catSensedData(arg).then(fileBuffer =>{
+  	event.returnValue = fileBuffer;
+  })
+})
+
+// IPFS & solc
 const fs = require('fs')
 const solc = require('solc')
 
@@ -64,17 +81,19 @@ node.on('ready', async () => {
 });
 
 // 存数据
-function addSensedData(sensedData){
+async function addSensedData(sensedData){
   const filesAdded = await node.files.add({
     content: Buffer.from(sensedData)
   })
   console.log('Added file:', filesAdded[0].path, filesAdded[0].hash)
+  return filesAdded[0].hash;
 }
 
 // 取数据
-function catSensedData(ipfsHash){
+async function catSensedData(ipfsHash){
   const fileBuffer = await node.files.cat(ipfsHash);
   console.log('Added file contents:', fileBuffer.toString())
+  return fileBuffer.toString();
 }
 
 // 编译合约
