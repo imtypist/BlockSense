@@ -1,0 +1,2 @@
+0x37Dc85ae239eC39556aE7CC35A129698152AFE3c
+[{"inputs": [{"name": "_location", "type": "string"}, {"name": "data", "type": "string"}, {"name": "_signalDegree", "type": "int256"}], "name": "commitTask", "stateMutability": "nonpayable", "outputs": [], "type": "function", "constant": false, "payable": false}]

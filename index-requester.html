@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BlockSense</title>
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+
+</head>
+<body>
+    <div class="container">
+
+        <h1>WiFi Sensing -- Requester</h1>
+
+        <h2 id="init"></h2>
+        <span id="Trans"></span>
+        <hr>
+
+        <img id="loader" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif">
+
+        <label for="rewardUnit" class="col-lg-2 control-label">Value of Each Reward</label>
+        <input id="rewardUnit" type="text">
+
+        <label for="rewardNum" class="col-lg-2 control-label"># of Data Required</label>
+        <input id="rewardNum" type="text">
+
+        <label for="wifiName" class="col-lg-2 control-label">WiFi Name</label>
+        <input id="wifiName" type="text">
+
+        <button id="button1">Create Task</button>
+        <button id="button2">Abort</button>
+        <button id="button3">Check</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <script>
+       if (typeof web3 !== 'undefined') {
+            web3 = new Web3(web3.currentProvider);
+        } else {
+            // set the provider you want from Web3.providers
+            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+        }
+
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+
+        var content = '';
+
+        var sensingWifi = web3.eth.contract([
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "rewardNum",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [],
+                "name": "abort",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_location",
+                        "type": "bytes32"
+                    },
+                    {
+                        "name": "_wifiName",
+                        "type": "bytes32"
+                    },
+                    {
+                        "name": "_signalDegree",
+                        "type": "int256"
+                    }
+                ],
+                "name": "commitTask",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "rewardUnit",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "wifiName",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bytes32"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "dataCount",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_rewardUnit",
+                        "type": "uint256"
+                    },
+                    {
+                        "name": "_rewardNum",
+                        "type": "uint256"
+                    },
+                    {
+                        "name": "_wifiName",
+                        "type": "bytes32"
+                    }
+                ],
+                "name": "initTask",
+                "outputs": [],
+                "payable": true,
+                "stateMutability": "payable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [],
+                "name": "getTask",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [],
+                "name": "getDataCnt",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "requester",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "address"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "state",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint8"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "anonymous": false,
+                "inputs": [],
+                "name": "Aborted",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "ru",
+                        "type": "uint256"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "rn",
+                        "type": "uint256"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "wn",
+                        "type": "bytes32"
+                    }
+                ],
+                "name": "TaskInited",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "ru",
+                        "type": "uint256"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "rn",
+                        "type": "uint256"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "wn",
+                        "type": "bytes32"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "cnt",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "ViewTask",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "l",
+                        "type": "bytes32"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "w",
+                        "type": "bytes32"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "s",
+                        "type": "int256"
+                    }
+                ],
+                "name": "DataCommited",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [],
+                "name": "TaskDone",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "cnt",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "dataCheck",
+                "type": "event"
+            }
+        ]);
+        var sensingWifiContract = sensingWifi.at('0x51a20e7b04b6aab7f8f7ff3f62c9de6d792b0db6');
+        console.log(sensingWifiContract);
+
+        var initEvent = sensingWifiContract.TaskInited({}, 'latest');
+
+        initEvent.watch(function(error, result){
+            if (!error){
+                $("#loader").hide();
+                $("#Trans").html('Block hash: ' + result.blockHash);
+                $("#init").html(result.args.rn.c+' data about WiFi \"'+web3.toAscii(result.args.wn)+'\" are required, and each of them is rewarded by '+result.args.ru.c+ ' wei.');
+            } else {
+                $("#loader").hide();
+                console.log(error);
+            }
+        });
+
+
+        var abortEvent = sensingWifiContract.Aborted({}, 'latest');
+
+        abortEvent.watch(function(err, res){
+            if (!err){
+                $("#loader").hide();
+                $("#Trans").html('Block hash: ' + res.blockHash);
+                $("#init").html('Money has been withdrawed!');
+            } else {
+                $("#loader").hide();
+                console.log(err);
+            }
+        });
+
+        var checkEvent = sensingWifiContract.dataCheck({}, 'latest');
+
+        checkEvent.watch(function(error, result){
+            if (!error){
+                $("#loader").hide();
+                $("#Trans").html('Block hash: ' + result.blockHash);
+                $("#init").html(result.args.cnt.c+' data have been collected.');
+            } else {
+                $("#loader").hide();
+                console.log(error);
+            }
+        });
+
+        var dataCollected = sensingWifiContract.DataCommited({}, 'latest');
+
+        dataCollected.watch(function(error, result){
+            if (!error){
+                $("#loader").hide();
+                content = content+'<br>Location: '+web3.toAscii(result.args.l)+', WiFi Name: '+web3.toAscii(result.args.w)+', Signal Strength: '+result.args.s.c;
+                $("#init").html(content);
+            } else {
+                $("#loader").hide();
+                console.log(error);
+            }
+        });
+
+        $("#button1").click(function() {
+            $("#loader").show();
+            sensingWifiContract.initTask($("#rewardUnit").val(), $("#rewardNum").val(), $("#wifiName").val(), {value: $("#rewardNum").val()*$("#rewardUnit").val()+100000000000000000} ,(err, res) => {
+               if (err) {
+                   $("#loader").hide();
+                }
+            });
+        });
+
+
+        $("#button2").click(function() {
+            $("#loader").show();
+            sensingWifiContract.abort((err, res) => {
+               if (err) {
+                   $("#loader").hide();
+                }
+            });
+        });
+
+        $("#button3").click(function() {
+            $("#loader").show();
+            sensingWifiContract.getDataCnt((err, res) => {
+               if (err) {
+                   $("#loader").hide();
+                }
+            });
+        });
+
+    </script>
+
+</body>
+</html>

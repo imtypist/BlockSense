@@ -1,24 +1,18 @@
 {
-  "name": "blocksense",
+  "name": "eth-project",
   "version": "1.0.0",
-  "description": "blockchain based crowd-sensing system",
+  "description": "eth project for crowdsensing",
   "main": "index.js",
   "scripts": {
-    "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "lite-server"
   },
-  "keywords": [
-    "blockchain",
-    "crowd-sensing"
-  ],
-  "author": "Junqin Huang",
+  "author": "lingkun",
   "license": "ISC",
   "dependencies": {
-    "electron": "^2.0.7",
-    "ipfs": "^0.31.7",
-    "solc": "^0.4.24"
+    "web3": "github:ethereum/web3.js"
   },
   "devDependencies": {
-    "electron-rebuild": "^1.8.2"
+    "lite-server": "^2.3.0"
   }
 }
