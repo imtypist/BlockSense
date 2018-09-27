@@ -6,6 +6,12 @@
 $ npm install
 ```
 
+And rebuild some modules for electron,
+
+```bash
+$ .\node_modules\.bin\electron-rebuild.cmd
+```
+
 ### Run it
 
 ```bash

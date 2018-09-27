@@ -39,12 +39,12 @@
             <div class="row" style="margin:15px 10px 15px 0;" ms-for="el in @data">
               <div class="col-md-4" style="background-color: gray;color: white;height: 80px;text-align: center">
                 <p style="margin-top: 15px"># Block {{el.order}}</p>
-                <p>>{{el.time}} secs ago</p>
+                <p>Timestamp {{el.time}}</p>
               </div>
               <div class="col-md-8">
                 <p>Mined By <a style="color: #3498db">{{el.miner}}</a></p>
-                <p><strong style="color: #3498db">{{el.txns}} txns</strong> in {{el.speed}} secs</p>
-                <p style="margin-bottom: 0">Block Reward {{el.reward}} Ether</p>
+                <p>Block Size <strong style="color: #3498db">{{el.size}}</strong> bytes for <strong style="color: #3498db">{{el.txns}}</strong> txns</p>
+                <p style="margin-bottom: 0">Block Hash <a style="color: #3498db">{{el.hash}}</a></p>
               </div>
             </div>
           </div>
