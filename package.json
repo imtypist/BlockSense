@@ -1,11 +1,11 @@
 {
-  "name": "blocksense",
+  "name": "BlockSense",
   "version": "1.0.0",
   "description": "blockchain based crowd-sensing system",
   "main": "index.js",
   "scripts": {
-    "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron . && geth --datadir data --networkid 31415926 --rpc --rpccorsdomain \"*\" --rpcapi db,eth,net,web3,personal,admin,miner,txpool --nodiscover console --unlock 0 --password passwd",
+    "test": "electron . "
   },
   "keywords": [
     "blockchain",
