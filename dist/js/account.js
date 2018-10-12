@@ -8,3 +8,11 @@ var txns = avalon.define({
     	{"txn":"0XC778CDFBB792B996AB1F716...","sender":"0xe54fcce2ada533c...","receiver":"0xdd7d3348dd968f791...","amount":0,"time":24}
     ]
 })
+
+if (typeof web3 !== 'undefined') {
+    web3 = new Web3(web3.currentProvider);
+} else {
+    // set the provider you want from Web3.providers
+    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+    web3.eth.defaultAccount = localStorage.getItem("defaultAccount");
+}

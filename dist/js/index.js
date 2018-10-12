@@ -1,3 +1,7 @@
+if(localStorage.getItem("defaultAccount") != null){
+    window.location.href = './account.html';
+}
+
 var blocks = avalon.define({
     $id: "blocks",
     data: [
@@ -28,29 +32,59 @@ if (typeof web3 !== 'undefined') {
 }
 
 $("#signup").on("click",function(){
-    passwd = $("#inputPassword").val();
+    var passwd = $("#inputPassword").val();
     if(passwd == $("#repeatPassword").val() && passwd != ''){
-        web3.eth.personal.newAccount().then(function(new_address){
-            web3.eth.defaultAccount = new_address;
-        });
+        web3.eth.defaultAccount = web3.personal.newAccount(passwd);
+        localStorage.setItem("defaultAccount", web3.eth.defaultAccount);
         window.location.href = './account.html';
     }else{
         alert('两次密码输入不相同或密码为空');
     }
 })
 
-function syncBlockAndTxList(cur_block){
-    web3.eth.getBlockNumber().then(function(new_block){
-        if(new_block > cur_block){
-            update_num = new_block - cur_block;
-            for(i = 1;i <= update_num;i++){
-                web3.eth.getBlock(cur_block + i).then(function(block_info){
-                    blocks.data.unshift({"order":block_info.number,"time":block_info.timestamp,"miner":block_info.miner,"txns":block_info.transactions.length,"size":block_info.size,"hash":block_info.hash});
-                });
-            }
-            if(blocks.data.length > 5){
-                blocks.data = blocks.data.slice(0,5);
-            }
-        }
-    });
+function syncBlocks(){
+    new_block = web3.eth.blockNumber;
+    i = 0;
+    temp_data = [];
+    while(i < 5 && (new_block - i) >= 0){
+        block_info = web3.eth.getBlock(new_block - i);
+        temp_data.push({
+            "order": block_info.number,
+            "time": block_info.timestamp,
+            "miner": block_info.miner,
+            "txns": block_info.transactions.length,
+            "size": block_info.size,
+            "hash": block_info.hash
+        });
+        i = i + 1;
+    }
+    blocks.data = temp_data;
 }
+
+function syncTXs(){
+    new_block = web3.eth.blockNumber;
+    i = 0;
+    num = 0;
+    temp_data = [];
+    while(i < 5 && (new_block - i) >= 0 && num < 5){
+        block_info = web3.eth.getBlock(new_block - i);
+        for(j = 0; j < block_info.transactions.length; j++){
+            tx_info = web3.eth.getTransaction(block_info.transactions[j]);
+            temp_data.push({
+                "txn": tx_info.hash,
+                "sender": tx_info.from,
+                "receiver": tx_info.to,
+                "amount": tx_info.value.toString(10),
+                "time": parseInt((Date.now() / 1000 - block_info.timestamp) / 60)
+            });
+            num = num + 1;
+            if(num >= 5) break;
+        }
+    }
+    txns.data = temp_data;
+}
+
+setInterval(function(){
+    syncBlocks();
+    syncTXs();
+},1000);

@@ -23,9 +23,9 @@
                 <label for="repeatPassword" class="sr-only">Repeat password</label>
                 <input type="password" id="repeatPassword" class="form-control" placeholder="Repeat password" required="">
                 <div class="checkbox">
-                  <a><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> 导入现有的账户</a>
+                  <a href="./index.html"><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> 导入现有的账户</a>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit" id="signup">创建</button>
+                <button class="btn btn-lg btn-primary btn-block" type="button" id="signup">创建</button>
               </form>
             </div>
           </div>
@@ -39,12 +39,12 @@
             <div class="row" style="margin:15px 10px 15px 0;" ms-for="el in @data">
               <div class="col-md-4" style="background-color: gray;color: white;height: 80px;text-align: center">
                 <p style="margin-top: 15px"># Block {{el.order}}</p>
-                <p>Timestamp {{el.time}}</p>
+                <p>UTC {{el.time}}</p>
               </div>
               <div class="col-md-8">
-                <p>Mined By <a style="color: #3498db">{{el.miner}}</a></p>
+                <p>Mined By <a style="color: #3498db">{{el.miner | truncate(30,'...')}}</a></p>
                 <p>Block Size <strong style="color: #3498db">{{el.size}}</strong> bytes for <strong style="color: #3498db">{{el.txns}}</strong> txns</p>
-                <p style="margin-bottom: 0">Block Hash <a style="color: #3498db">{{el.hash}}</a></p>
+                <p style="margin-bottom: 0">Block Hash <a style="color: #3498db">{{el.hash | truncate(30,'...')}}</a></p>
               </div>
             </div>
           </div>
@@ -55,12 +55,12 @@
             <!-- txns repeat -->
             <div class="row" style="height: 80px;margin:15px 10px 15px 0;" ms-for="el in @data">
               <div class="col-md-8">
-                <p style="margin-bottom: 0">TX# <a style="color: #3498db">{{el.txn}}</a></p>
-                <p style="margin-bottom: 0">From <a style="color: #3498db">{{el.sender}}</a> to <a style="color: #3498db">{{el.receiver}}</a></p>
+                <p style="margin-bottom: 0">TX# <a style="color: #3498db">{{el.txn | truncate(30,'...')}}</a></p>
+                <p style="margin-bottom: 0">From <a style="color: #3498db">{{el.sender | truncate(30,'...')}}</a> to <a style="color: #3498db">{{el.receiver | truncate(30,'...')}}</a></p>
                 <p style="margin-bottom: 0">Amount {{el.amount}} Ether</p>
               </div>
               <div class="col-md-4" style="text-align: right">
-                <p>>{{el.time}} min ago</p>
+                <p>> {{el.time}} min ago</p>
               </div>
             </div>
           </div>
