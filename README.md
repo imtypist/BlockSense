@@ -43,4 +43,4 @@ $ npm start
 > **Q4:** An unhandled error occurred inside electron-rebuild
 >
 > **A4:** [https://github.com/Microsoft/nodejs-guidelines/blob/master/windows-environment.md#compiling-native-addon-modules](https://github.com/Microsoft/nodejs-guidelines/blob/master/windows-environment.md#compiling-native-addon-modules)、[https://github.com/nodejs/node-gyp#installation](https://github.com/nodejs/node-gyp#installation)
-     检查路径中不要有中文，心诚则灵，自求多福
+     检查路径中不要有中文. I tried it on Windows and Ubuntu, which indicated that the same error occur on both platforms, i.e., `openssl/rsa.h: No such file`. For Windows, I haven't found a solution, but it is easy to solve on Ubuntu, which just needs a simple command, `sudo apt-get install libssl-dev`.  Waste much time on it!
