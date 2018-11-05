@@ -1,5 +1,10 @@
 # BlockSense — A Blockchain-based Decentralized Crowd-sensing System
 
+### Dependencies
+
+- nodejs@v8.11.1
+- python@v2.7.15
+
 ### Installation
 
 ```bash
@@ -34,3 +39,8 @@ $ npm start
 > **Q3:** npm install build `ERROR MSB4019`
 >
 > **A3:** [https://stackoverflow.com/questions/18774929/npm-install-g-karma-error-msb4019-the-imported-project-c-microsoft-cpp-defau](https://stackoverflow.com/questions/18774929/npm-install-g-karma-error-msb4019-the-imported-project-c-microsoft-cpp-defau)
+
+> **Q4:** An unhandled error occurred inside electron-rebuild
+>
+> **A4:** [https://github.com/Microsoft/nodejs-guidelines/blob/master/windows-environment.md#compiling-native-addon-modules](https://github.com/Microsoft/nodejs-guidelines/blob/master/windows-environment.md#compiling-native-addon-modules)、[https://github.com/nodejs/node-gyp#installation](https://github.com/nodejs/node-gyp#installation)
+     检查路径中不要有中文，心诚则灵，自求多福

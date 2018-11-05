@@ -4,8 +4,8 @@
   "description": "blockchain based crowd-sensing system",
   "main": "index.js",
   "scripts": {
-    "start": "electron . && geth --datadir data --networkid 31415926 --rpc --rpccorsdomain \"*\" --rpcapi db,eth,net,web3,personal,admin,miner,txpool --nodiscover console --unlock 0 --password passwd",
-    "test": "electron . "
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "blockchain",
@@ -14,9 +14,10 @@
   "author": "Junqin Huang",
   "license": "ISC",
   "dependencies": {
-    "electron": "^2.0.7",
-    "ipfs": "^0.31.7",
-    "solc": "^0.4.24"
+    "electron": "^3.0.7",
+    "ipfs": "^0.33.0",
+    "solc": "^0.4.25",
+    "web3": "^1.0.0-beta.36"
   },
   "devDependencies": {
     "electron-rebuild": "^1.8.2"

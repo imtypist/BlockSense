@@ -96,16 +96,35 @@ async function catSensedData(ipfsHash){
   return fileBuffer.toString();
 }
 
-// 编译合约
-function compileContract(contract_name){
-	let source = fs.readFileSync("./dist/contracts/" + contract_name + ".sol", 'utf8')
-	console.log('compiling contract...');
-	let compiledContract = solc.compile(source);
-	console.log('done');
+var Web3 = require("web3");
+// 创建web3对象
+var web3 = new Web3();
+// 连接到本地节点
+web3.setProvider(new Web3.providers.HttpProvider("http://localhost:8545"));
 
-	for (let contractName in compiledContract.contracts) {
-	    var bytecode = compiledContract.contracts[contractName].bytecode;
-	    var abi = JSON.parse(compiledContract.contracts[contractName].interface);
-	}
-	console.log(abi)
+function deployManagerContract(){
+	let source = fs.readFileSync('dist/contracts/taskManagement.sol', 'utf8');
+	let compiledContract = solc.compile(source, 1);
+	let abi = compiledContract.contracts['taskManagement'].interface;
+	let bytecode = compiledContract.contracts['taskManagement'].bytecode;
+	let gasEstimate = web3.eth.estimateGas({data: bytecode});
+	let MyContract = web3.eth.contract(JSON.parse(abi));
+	localStorage.setItem('taskManagementContractAbi',JSON.parse(abi));
+	var myContractReturned = MyContract.new({
+	  from:web3.eth.accounts[0],
+	  data:bytecode,
+	  gas:gasEstimate}, function(err, myContract){
+	   if(!err) {
+	      // NOTE: The callback will fire twice!
+	      // Once the contract has the transactionHash property set and once its deployed on an address.
+	      if(!myContract.address) {
+	          console.log(myContract.transactionHash) // The hash of the transaction, which deploys the contract
+	      } else {
+	          console.log(myContract.address) // the contract address
+	          localStorage.setItem('taskManagementContractAddress',myContract.address);
+	      }
+	   }
+	 });
 }
+
+deployManagerContract();

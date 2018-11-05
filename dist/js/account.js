@@ -113,7 +113,7 @@ function syncTXs(new_block){
                 "txn": tx_info.hash,
                 "sender": tx_info.from,
                 "receiver": tx_info.to,
-                "amount": tx_info.value.toString(10),
+                "amount": web3.fromWei(tx_info.value).toString(10),
                 "time": parseInt((Date.now() / 1000 - block_info.timestamp) / 60)
             });
             num = num + 1;
