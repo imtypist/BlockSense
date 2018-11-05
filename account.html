@@ -36,11 +36,12 @@
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
       </nav>
-      <div style="height: 595px;width: 100%;padding: 0 20px 0;">
-        <button type="button" class="btn btn-default" style="position: absolute;top: 72px;right: 20px">退出</button>
+      <div style="height: 595px;width: 100%;padding: 0 20px 0;" ms-controller="account_info">
+        <button type="button" class="btn btn-default" style="position: absolute;top: 72px;right: 20px" id="logout">退出</button>
         <button type="button" class="btn btn-primary" style="position: absolute;top: 72px;right: 90px">备份私钥</button>
-        <button type="button" class="btn btn-warning" style="position: absolute;top: 125px;right: 20px"><span class="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span> 加入矿工节点</button>
-        <p style="position: absolute;top: 135px;right: 165px;color: #7c7c7c;font-size: 12px">当前状态：正在同步#<span style="color: #3498db">16489</span>区块，<span style="color: #3498db">未开启</span>挖矿</p>
+        <button type="button" class="btn btn-warning" style="position: absolute;top: 125px;right: 20px" ms-if="@data.isMining" disabled><span class="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span> 加入矿工节点</button>
+        <button type="button" class="btn btn-warning" style="position: absolute;top: 125px;right: 20px" ms-if="@data.isMining == false" disabled><span class="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span> 加入矿工节点</button>
+        <p style="position: absolute;top: 135px;right: 165px;color: #7c7c7c;font-size: 12px">当前状态：正在同步#<span style="color: #3498db">{{@data.blockNumber}}</span>区块，<span style="color: #3498db" ms-if="@data.isMining">已开启</span><span style="color: #3498db" ms-if="@data.isMining == false">已开启</span>挖矿</p>
         <div class="media">
           <div class="media-left">
             <a href="#">
@@ -48,26 +49,26 @@
             </a>
           </div>
           <div class="media-body">
-            <h1 class="media-heading">Nickname</h1>
-            <p><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 0x2a65Aca4D5fC5B5C859090a6c34d164135398226</p>
-            <h4>0.00 <strong style="color: #3498db">ETHER</strong></h4>
+            <h1 class="media-heading">{{@data.nickname}}</h1>
+            <p><span class="glyphicon glyphicon-user" aria-hidden="true" style="margin-right: 5px"></span>{{@data.address}}</p>
+            <h4 style="padding-left: 4px">{{@data.value}}<strong style="color: #3498db"> ETHER</strong></h4>
           </div>
         </div>
         <h3><span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> 转账 Transfer</h3>
         <div class="input-group" style="margin-top: 10px;">
           <span class="input-group-addon" id="basic-addon3">From</span>
-          <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="0x2a65Aca4D5fC5B5C859090a6c34d164135398226" disabled="true">
+          <input type="text" class="form-control" aria-describedby="basic-addon3" ms-attr="{placeholder: @data.address}" disabled>
         </div>
         <div class="input-group" style="margin-top: 10px;">
           <span class="input-group-addon" id="basic-addon4">To</span>
-          <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon4" placeholder="0x0000000...">
+          <input type="text" class="form-control" id="to_address" aria-describedby="basic-addon4" placeholder="0x0000000...">
         </div>
         <div class="input-group" style="margin-top: 10px;">
           <span class="input-group-addon">$</span>
-          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-          <span class="input-group-addon">ETH</span>
+          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" id="transfer_amount">
+          <span class="input-group-addon">Wei</span>
         </div>
-        <button type="button" class="btn btn-primary btn-block" style="margin-top: 10px">转账</button>
+        <button type="button" class="btn btn-primary btn-block" id="transfer" style="margin-top: 10px">转账</button>
         <h3><span class="glyphicon glyphicon-xbt" aria-hidden="true"></span> 我的交易 Transactions</h3>
         <div style="overflow-y: auto;height: 208px" ms-controller="txns">
           <!-- txns repeat -->
@@ -90,6 +91,7 @@
     <script type="text/javascript" src="dist/js/avalon.min.js"></script>
     <script type="text/javascript" src="dist/js/jquery.min.js"></script>
     <script type="text/javascript" src="dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="dist/js/sweetalert2.all.min.js"></script>
     <script type="text/javascript" src="dist/js/account.js"></script>
     <!-- Insert this line after script imports -->
     <script>if (window.module) module = window.module;</script>

@@ -13,3 +13,11 @@ var taskList = avalon.define({
     	{"status":1,"contract":"0X4825811A5E63458953CFF8F5...","name":"感知任务10","description":"收集闵行校区内SSID为SJTU的WiFi信号强度"}
     ]
 })
+
+if (typeof web3 !== 'undefined') {
+    web3 = new Web3(web3.currentProvider);
+} else {
+    // set the provider you want from Web3.providers
+    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+    web3.eth.defaultAccount = localStorage.getItem("defaultAccount");
+}
