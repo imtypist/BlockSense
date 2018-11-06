@@ -9,7 +9,7 @@ function createWindow () {
     nodeIntegration: false
   }
   // Create the browser window.
-  win = new BrowserWindow({ width: 1200, height: 700, resizable: false})
+  win = new BrowserWindow({ width: 1200, height: 700, resizable: false, icon: 'dist/img/crowd.png'})
 
   // and load the index.html of the app.
   win.loadFile('index.html')
@@ -97,14 +97,19 @@ var Web3 = require("web3");
 var web3 = new Web3();
 web3.setProvider(new Web3.providers.HttpProvider("http://localhost:8545"));
 
+if (typeof localStorage === "undefined" || localStorage === null) {
+  var LocalStorage = require('node-localstorage').LocalStorage;
+  localStorage = new LocalStorage('./scratch');
+}
+
 function compileContract(contract_name){
   let source = fs.readFileSync("./dist/contracts/" + contract_name + ".sol", 'utf8')
-  console.log('compiling contract...');
+  console.log('=> compiling contract ' + contract_name);
   let compiledContract = solc.compile(source);
 
   for (let contractName in compiledContract.contracts) {
       var bytecode = compiledContract.contracts[contractName].bytecode;
-      var abi = JSON.parse(compiledContract.contracts[contractName].interface);
+      var abi = compiledContract.contracts[contractName].interface;
   }
   contract_info = {"abi": abi, "bytecode": bytecode};
   return contract_info;
@@ -113,26 +118,34 @@ function compileContract(contract_name){
 function deployManagerContract(){
   let contract_info = compileContract('taskManagement');
   let bytecode = contract_info.bytecode;
-  let abi = contract_info.abi;
+  localStorage.setItem('_abi',contract_info.abi);
+  let abi = JSON.parse(contract_info.abi);
   web3.eth.estimateGas({data: bytecode}).then(function(gasEstimate){
-    console.log(gasEstimate)
     web3.eth.getAccounts().then(function(accounts){
-      let myContract = new web3.eth.Contract(abi,'0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae',{from: accounts[0], gas: gasEstimate});
+      let myContract = new web3.eth.Contract(abi,null,{from: accounts[0], gas: gasEstimate});
       myContract.deploy({data: bytecode})
       .send({from: accounts[0], gas: gasEstimate},function(error, transactionHash){
-        console.log("deploy tx hash:" + transactionHash)
+        console.log("=> hash: " + transactionHash)
       })
-      .on('error', function(error){ console.error(error) })
-      .on('transactionHash', function(transactionHash){ console.log("hash:",transactionHash)})
-      .on('receipt', function(receipt){
-        console.log(receipt.contractAddress) // contains the new contract address
-      })
-      .on('confirmation', function(confirmationNumber, receipt){console.log("receipt,",receipt)})
       .then(function(newContractInstance){
-        console.log(newContractInstance.options.address) // instance with the new contract address
+        console.log("=> address: " + newContractInstance.options.address) // instance with the new contract address
+        localStorage.setItem('_address', newContractInstance.options.address);
       });
     })
   });
 }
 
-deployManagerContract();
+if(!(localStorage.getItem('_abi') && localStorage.getItem('_address'))){
+  deployManagerContract();
+}
+
+ipcMain.on('synchronous-taskManager', (event, arg) => {
+  taskManager().then(result =>{
+    event.returnValue = result;
+  })
+})
+
+async function taskManager(){
+  contract_info = {"abi": localStorage.getItem('_abi'), "address": localStorage.getItem('_address')};
+  return contract_info;
+}

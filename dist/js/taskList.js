@@ -21,3 +21,6 @@ if (typeof web3 !== 'undefined') {
     web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
     web3.eth.defaultAccount = localStorage.getItem("defaultAccount");
 }
+
+var taskManager = ipcRenderer.sendSync('synchronous-taskManager');
+console.log(taskManager)

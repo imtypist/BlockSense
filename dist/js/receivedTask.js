@@ -9,8 +9,19 @@ var taskList = avalon.define({
 
 const {ipcRenderer} = require('electron')
 
+var taskManager = ipcRenderer.sendSync('synchronous-taskManager');
+console.log(taskManager)
+
 $("#submitSensedData").on("click",function(){
 	var dataHash = ipcRenderer.sendSync('synchronous-addSensedData', 'hello world');
 	console.log(dataHash)
 	console.log(ipcRenderer.sendSync('synchronous-catSensedData', dataHash))
 })
+
+if (typeof web3 !== 'undefined') {
+    web3 = new Web3(web3.currentProvider);
+} else {
+    // set the provider you want from Web3.providers
+    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+    web3.eth.defaultAccount = localStorage.getItem("defaultAccount");
+}
