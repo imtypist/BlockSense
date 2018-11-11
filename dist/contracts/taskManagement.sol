@@ -6,7 +6,7 @@ contract taskManagement{
 		uint state;
 	}
 
-	mapping(address => taskState) states;
+	mapping(address => taskState) public states;
 
     event taskList(address contra, string taskabi, string taskName, string taskDescrip);
 
@@ -19,13 +19,13 @@ contract taskManagement{
     	emit taskList(contra, taskabi, taskName, taskDescrip);
     }
 
-    event stateChanged();
+    event stateChanged(address contra);
 
     function changeState(address contra, uint _state)
     	public
     {
     	require(states[contra].state == 1 && msg.sender == states[contra].requester);
     	states[contra].state = _state;
-    	emit stateChanged();
+    	emit stateChanged(contra);
     }
 }
