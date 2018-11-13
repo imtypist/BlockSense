@@ -135,6 +135,6 @@ setInterval(function(){
 },1000);
 
 $("#logout").on("click",function(){
-    localStorage.removeItem("defaultAccount");
+    localStorage.clear();
     window.location.href = './index.html';
 });

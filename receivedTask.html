@@ -45,13 +45,14 @@
             <div class="list-group">
               <a href="#" class="list-group-item" ms-for="el in @data">
                 <h4 class="list-group-item-heading">
-                  <span class="label label-success" ms-if="el.status==0">未完成</span>
-                  <span class="label label-danger" ms-if="el.status==1">已完成</span>
+                  <span class="label label-success" ms-if="el.status==1">未完成</span>
+                  <span class="label label-danger" ms-if="el.status==3">已完成</span>
+                  <span class="label label-warning" ms-if="el.status==2">已中止</span>
                   {{el.name}}
                 </h4>
                 <p class="list-group-item-text">智能合约地址：<span style="color: #3498db">{{el.contract}}</span></p>
                 <p class="list-group-item-text">任务描述：{{el.description}}</p>
-                <button type="button" class="btn btn-default" style="position: absolute;right: 10px;top: 10px" data-toggle="modal" data-target="#myModal">查看详细内容</button>
+                <button type="button" class="btn btn-primary taskDetailInfo" style="position: absolute;right: 10px;top: 10px">查看详细内容</button>
                 <button type="button" class="btn btn-primary" style="position: absolute;right: 130px;top: 10px" data-toggle="modal" data-target=".bs-example-modal-lg">提交任务数据</button>
               </a>
             </div>
@@ -89,21 +90,24 @@
         </div>
       </div>
       <!-- Modal -->
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <button type="button" class="btn btn-primary" id="clickToAppear" style="display: none" data-toggle="modal" data-target="#myModal"></button>
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ms-controller="singleTask">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title" id="myModalLabel"><span class="label label-success">未完成</span>感知任务1</h4>
+              <h4 class="modal-title" id="myModalLabel"><span class="label label-success" ms-if="@data.status==1">未完成</span>
+                  <span class="label label-danger" ms-if="@data.status==3">已完成</span>
+                  <span class="label label-warning" ms-if="@data.status==2">已中止</span>{{@data.name}}</h4>
             </div>
             <div class="modal-body">
               <dl class="dl-horizontal">
                 <dt>发布者Address</dt>
-                <dd>0x2a65Aca4D5fC5B5C859090a6c34d164135398226</dd>
+                <dd>{{@data.requester}}</dd>
                 <dt>合约地址</dt>
-                <dd>0x51a20e7b04b6aab7f8f7ff3f62c9de6d792b0db6</dd>
+                <dd>{{@data.contract}}</dd>
                 <dt>任务描述</dt>
-                <dd>收集闵行校区内SSID为SJTU的WiFi信号强度</dd>
+                <dd>{{@data.description}}</dd>
                 <dt>任务所需数据个数</dt>
                 <dd>5</dd>
                 <dt>任务已收集数据个数</dt>
@@ -114,295 +118,12 @@
               <hr>
               <strong>合约ABI</strong>
               <pre>
-[
-  {
-    "constant": true,
-    "inputs": [
-      
-    ],
-    "name": "rewardNum",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      
-    ],
-    "name": "abort",
-    "outputs": [
-      
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_location",
-        "type": "bytes32"
-      },
-      {
-        "name": "_wifiName",
-        "type": "bytes32"
-      },
-      {
-        "name": "_signalDegree",
-        "type": "int256"
-      }
-    ],
-    "name": "commitTask",
-    "outputs": [
-      
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      
-    ],
-    "name": "rewardUnit",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      
-    ],
-    "name": "wifiName",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      
-    ],
-    "name": "dataCount",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_rewardUnit",
-        "type": "uint256"
-      },
-      {
-        "name": "_rewardNum",
-        "type": "uint256"
-      },
-      {
-        "name": "_wifiName",
-        "type": "bytes32"
-      }
-    ],
-    "name": "initTask",
-    "outputs": [
-      
-    ],
-    "payable": true,
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      
-    ],
-    "name": "getTask",
-    "outputs": [
-      
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      
-    ],
-    "name": "getDataCnt",
-    "outputs": [
-      
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      
-    ],
-    "name": "requester",
-    "outputs": [
-      {
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      
-    ],
-    "name": "state",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint8"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      
-    ],
-    "name": "Aborted",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "name": "ru",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "name": "rn",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "name": "wn",
-        "type": "bytes32"
-      }
-    ],
-    "name": "TaskInited",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "name": "ru",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "name": "rn",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "name": "wn",
-        "type": "bytes32"
-      },
-      {
-        "indexed": false,
-        "name": "cnt",
-        "type": "uint256"
-      }
-    ],
-    "name": "ViewTask",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "name": "l",
-        "type": "bytes32"
-      },
-      {
-        "indexed": false,
-        "name": "w",
-        "type": "bytes32"
-      },
-      {
-        "indexed": false,
-        "name": "s",
-        "type": "int256"
-      }
-    ],
-    "name": "DataCommited",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      
-    ],
-    "name": "TaskDone",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "name": "cnt",
-        "type": "uint256"
-      }
-    ],
-    "name": "dataCheck",
-    "type": "event"
-  }
-]
+{{@data.abi}}
               </pre>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-              <button type="button" class="btn btn-primary">删除任务</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal" id="closeTaskModal">关闭</button>
+              <button type="button" class="btn btn-primary" id="deleteTask">删除任务</button>
             </div>
           </div>
         </div>

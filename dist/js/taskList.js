@@ -70,3 +70,40 @@ $(document).on("click",".taskDetailInfo",function(){
     singleTask.data = taskListInfo.data[index];
     $("#clickToAppear").click();
 })
+
+$(document).on("click","#acceptTask",function(){
+    if(singleTask.data.status == 2){
+        swal({
+          type: 'error',
+          title: 'This task has been aborted!'
+        })
+        return;
+    }
+    if(singleTask.data.status == 3){
+        swal({
+          type: 'error',
+          title: 'This task has been completed!'
+        })
+        return;
+    }
+    if(localStorage.getItem('receivedTask') == undefined){
+        localStorage.setItem('receivedTask',JSON.stringify([]));
+    }
+    var currentTask = JSON.parse(localStorage.getItem('receivedTask'));
+    if($.inArray(singleTask.data.contract, currentTask) == -1){
+        currentTask.push(singleTask.data.contract);
+        localStorage.setItem('receivedTask',JSON.stringify(currentTask));
+        swal({
+          position: 'top-end',
+          type: 'success',
+          title: 'You have accepted this task successfully',
+          showConfirmButton: false,
+          timer: 2000
+        })
+    }else{
+        swal({
+          type: 'error',
+          title: 'You have already accepted it before!'
+        })
+    }
+})
