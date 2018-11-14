@@ -3,7 +3,10 @@
 ### Dependencies
 
 - nodejs@v8.11.1
+
 - python@v2.7.15
+
+- ganache@v1.2.2
 
 ### Installation
 
@@ -14,7 +17,10 @@ $ npm install
 And rebuild some modules for electron,
 
 ```bash
+# for windows
 $ .\node_modules\.bin\electron-rebuild.cmd
+# for linux
+$ ./node_modules/.bin/electron-rebuild
 ```
 
 ### Run it
@@ -23,7 +29,7 @@ $ .\node_modules\.bin\electron-rebuild.cmd
 $ npm start
 ```
 
-### FAQ
+### Some errors may happen
 
 > **Q1:** Error: A dynamic link library (DLL) initialization routine failed
 >
@@ -44,3 +50,11 @@ $ npm start
 >
 > **A4:** [https://github.com/Microsoft/nodejs-guidelines/blob/master/windows-environment.md#compiling-native-addon-modules](https://github.com/Microsoft/nodejs-guidelines/blob/master/windows-environment.md#compiling-native-addon-modules)、[https://github.com/nodejs/node-gyp#installation](https://github.com/nodejs/node-gyp#installation)
      检查路径中不要有中文. I tried it on Windows and Ubuntu, which indicated that the same error occur on both platforms, i.e., `openssl/rsa.h: No such file`. For Windows, I haven't found a solution, but it is easy to solve on Ubuntu, which just needs a simple command, `sudo apt-get install libssl-dev`.  Waste much time on it!
+
+> **Q5:** Sweetalert2 text input not clickable when bootstrap modal is open
+>
+> **A5:** [https://github.com/sweetalert2/sweetalert2/issues/374](https://github.com/sweetalert2/sweetalert2/issues/374)
+
+> **Q6:** Raise the `exceed gas limit` error
+>
+> **A6:** Just increase the upper bound of gas limit for testrpc or geth client, here I set limit gas to 100000000.

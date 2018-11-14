@@ -1,12 +1,13 @@
 pragma solidity ^0.4.24;
 
-contract @contractname{
+contract sensingTask{
     uint public rewardUnit;
     uint public rewardNum;
     uint public dataCount;
     address public requester;
     uint public state; // 1:ACTIVE 2:ABORT 3:COMPLETE
     string public taskDescrip;
+    string public name;
 
     mapping(bytes32 => string) dataStatus; // Either '' or 'Committed'
 
@@ -26,9 +27,9 @@ contract @contractname{
     }
 
     // construct function
-    event TaskInited(uint rewardUnit, uint rewardNum, string taskDescrip);
+    event TaskInited(uint rewardUnit, uint rewardNum, string taskDescrip, string name);
 
-    constructor(uint _rewardUnit, uint _rewardNum, string _taskDescrip)
+    constructor(uint _rewardUnit, uint _rewardNum, string _taskDescrip, string _name)
         public
         condition(msg.value >= _rewardUnit * _rewardNum)
         payable
@@ -38,9 +39,10 @@ contract @contractname{
         rewardNum = _rewardNum;
         taskDescrip = _taskDescrip;
         state = 1; // ACTIVE
+        name = _name;
         // customized area
 
-        emit TaskInited(_rewardUnit, _rewardNum, _taskDescrip);
+        emit TaskInited(_rewardUnit, _rewardNum, _taskDescrip, _name);
     }
 
     // abort task
@@ -69,7 +71,7 @@ contract @contractname{
         bytes memory sensingDataCommit = bytes(dataStatus[_location]);
         require(sensingDataCommit.length == 0);
         
-        require(sensingData @dataCheck);
+        require(sensingData @condition);
         
         dataStatus[_location] = "Committed";
         

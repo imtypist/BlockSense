@@ -105,11 +105,16 @@ if (typeof localStorage === "undefined" || localStorage === null) {
 function compileContract(contract_name){
   let source = fs.readFileSync("./dist/contracts/" + contract_name + ".sol", 'utf8')
   console.log('=> compiling contract ' + contract_name);
-  let compiledContract = solc.compile(source);
-
+  let compiledContract;
+  try{
+    compiledContract = solc.compile(source);
+  }catch(err){
+    console.log(err);
+    return -1;
+  }
   for (let contractName in compiledContract.contracts) {
-      var bytecode = compiledContract.contracts[contractName].bytecode;
-      var abi = compiledContract.contracts[contractName].interface;
+    var bytecode = compiledContract.contracts[contractName].bytecode;
+    var abi = compiledContract.contracts[contractName].interface;
   }
   contract_info = {"abi": abi, "bytecode": bytecode};
   return contract_info;
@@ -148,4 +153,30 @@ ipcMain.on('synchronous-taskManager', (event, arg) => {
 async function taskManager(){
   contract_info = {"abi": localStorage.getItem('_abi'), "address": localStorage.getItem('_address')};
   return contract_info;
+}
+
+ipcMain.on('synchronous-compileTask', (event, arg) => {
+  // console.log(arg)
+  compileTask(arg).then(res =>{
+    event.returnValue = res;
+  })
+})
+
+async function compileTask(condition){ // string type
+  let source = fs.readFileSync("./dist/contracts/sensingTaskTemplate.sol", 'utf8')
+  var reg = /@condition/;
+  source = source.replace(reg, condition);
+  let compiledContract;
+  try{
+    compiledContract = solc.compile(source);
+  }catch(err){
+    console.log(err);
+    return -1; // compile failed
+  }
+  for (let contractName in compiledContract.contracts) {
+    var bytecode = compiledContract.contracts[contractName].bytecode;
+    var abi = compiledContract.contracts[contractName].interface;
+  }
+  contract_info = {"abi": abi, "bytecode": bytecode};
+  return JSON.stringify(contract_info);
 }

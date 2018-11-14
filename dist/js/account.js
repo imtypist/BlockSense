@@ -43,7 +43,7 @@ $("#transfer").on("click",function(){
     }).then((result) => {
       if (result.value) {
         swal({
-          title: 'Confirm your password again',
+          title: 'Enter your password',
           input: 'password',
           inputAttributes: {
             autocapitalize: 'off'
@@ -104,7 +104,7 @@ function syncTXs(new_block){
     i = 0;
     num = 0;
     temp_data = [];
-    while(i < 5 && (new_block - i) >= 0 && num < 5){
+    while((new_block - i) >= 0 && num < 5){
         block_info = web3.eth.getBlock(new_block - i);
         for(j = 0; j < block_info.transactions.length; j++){
             tx_info = web3.eth.getTransaction(block_info.transactions[j]);
