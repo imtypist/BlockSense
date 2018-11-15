@@ -55,13 +55,27 @@
                 <p class="list-group-item-text">智能合约地址：<span style="color: #3498db">{{el.contract}}</span></p>
                 <p class="list-group-item-text">任务描述：{{el.description}}</p>
                 <button type="button" class="btn btn-primary taskDetailInfo" style="position: absolute;right: 10px;top: 10px">查看详细内容</button>
-                <button type="button" class="btn btn-danger terminateTask" style="position: absolute;right: 130px;top: 10px" ms-if="el.status==1">中止任务</button>
+                <button type="button" class="btn btn-success getSensingData" style="position: absolute;right: 130px;top: 10px">收集到的数据</button>
+                <button type="button" class="btn btn-danger terminateTask" style="position: absolute;right: 250px;top: 10px" ms-if="el.status==1">中止任务</button>
               </a>
             </div>
           </div>
         </div>
       </div>
-      <!-- Large modal -->
+      <!-- Large modal for get sensing data -->
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-sensing-modal-lg" style="display: none" id="sensingDataModal"></button>
+      <div class="modal fade bs-sensing-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+              <h4 class="modal-title">收集到的感知数据</h4>
+            </div>
+            <div class="modal-body"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Large modal for publish task -->
       <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">

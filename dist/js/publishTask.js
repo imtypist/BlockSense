@@ -399,3 +399,7 @@ function recoverModalAfterPublishTask(cc, dc, cc_progress, dc_progress, cc_icon,
 	}
 	return 0;
 }
+
+$(document).on("click",'.getSensingData',function(){
+	$('#sensingDataModal').click();
+})
