@@ -67,8 +67,20 @@ var singleTask = avalon.define({
 
 $(document).on("click",".taskDetailInfo",function(){
     var index = $(this).parent().index();
-    singleTask.data = taskListInfo.data[index];
-    $("#clickToAppear").click();
+    var temp_task = taskListInfo.data[index];
+    var sensing = web3.eth.contract(JSON.parse(temp_task.abi));
+    var sensingContract = sensing.at(temp_task.contract);
+    sensingContract.rewardUnit(function(err,res){
+        temp_task['rewardUnit'] = res.toString();
+        sensingContract.rewardNum(function(err,res){
+            temp_task['rewardNum'] = res.toString();
+            sensingContract.dataCount(function(err,res){
+                temp_task['dataCount'] = res.toString();
+                singleTask.data = temp_task;
+                $("#clickToAppear").click();
+            })
+        })
+    })
 })
 
 $(document).on("click","#acceptTask",function(){

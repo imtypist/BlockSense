@@ -24,7 +24,8 @@ contract taskManagement{
     function changeState(address contra, uint _state)
     	public
     {
-    	require(states[contra].state == 1 && msg.sender == states[contra].requester);
+    	// require(states[contra].state == 1 && msg.sender == states[contra].requester);
+        require(states[contra].state == 1);
     	states[contra].state = _state;
     	emit stateChanged(contra);
     }
