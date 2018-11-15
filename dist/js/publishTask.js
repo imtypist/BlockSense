@@ -193,6 +193,55 @@ $(document).on("click","#publishTask",function(){
         $(this).removeAttr('disabled');
         return;
 	}
+	var compileData = {'condition':condition.trim()};
+	// additional variables
+	for (var i = $(".contract_var").length - 1; i >= 0; i--) {
+		var el = $(".contract_var").eq(i);
+		var type = el.find('button.var_type:eq(0)').text();
+		var property = el.find('button.var_property:eq(0)').text();
+		var var_name = el.find('input.var_name:eq(0)').val();
+		var var_value = el.find('input.var_value:eq(0)').val();
+		if(/^\s*$/.test(var_name) && /^\s*$/.test(var_value) && $(".contract_var").length == 1){ // no addtitional vars
+			break;
+		}else if(/^\s*$/.test(var_name) && /^\s*$/.test(var_value) && $(".contract_var").length > 1){ // extra blank
+			swal({
+	          type: 'error',
+	          title: 'Please delete extra blank items before publishing task!'
+	        });
+	        $(this).removeAttr('disabled');
+	        return;
+		}else if(/^[a-zA-Z]+\w*$/.test(var_name) == false){ // variable name in wrong form
+			swal({
+	          type: 'error',
+	          title: 'Variable name is not in correct form!'
+	        });
+	        $(this).removeAttr('disabled');
+	        return;
+		}else if(compileData[var_name]){ // the same variable name exist
+			swal({
+	          type: 'error',
+	          title: 'Variable names cannot be the same!'
+	        });
+	        $(this).removeAttr('disabled');
+	        return;
+		}else if(type == 'int' && /^-?\d+$/.test(var_value) == false){ // value is not int
+			swal({
+	          type: 'error',
+	          title: 'Variable value is not an integer type!'
+	        });
+	        $(this).removeAttr('disabled');
+	        return;
+		}else if(type == 'bytes32' && (/^\s*$/.test(var_value) || var_value.length > 32)){ // value is empty or too long
+			swal({
+	          type: 'error',
+	          title: 'Variable value cannot be empty or exceed 32 bytes!'
+	        });
+	        $(this).removeAttr('disabled');
+	        return;
+		}else{ // is a legal variable
+			compileData[var_name] = {'value': var_value, 'type': type, 'property': property};
+		}
+	}
 	swal({
       title: 'Are you sure to publish this task?',
       type: 'warning',
@@ -222,7 +271,7 @@ $(document).on("click","#publishTask",function(){
 						var cc_icon = cc_progress.find("span.glyphicon:eq(0)");
 						var dc_icon = dc_progress.find("span.glyphicon:eq(0)");
 						setTimeout(function(){ // meanless sleep
-							var contract_info = ipcRenderer.sendSync('synchronous-compileTask',condition.trim());
+							var contract_info = ipcRenderer.sendSync('synchronous-compileTask',JSON.stringify(compileData));
 							if(contract_info == -1){ // compile failed
 								cc_progress.removeClass("progress-bar-success").addClass("progress-bar-danger");
 								cc_progress.css('width','50%');
@@ -316,6 +365,7 @@ $(document).on("click","#publishTask",function(){
 
 function recoverModalAfterPublishTask(cc, dc, cc_progress, dc_progress, cc_icon, dc_icon, cc_status, dc_status){ // success: 0, failure: 1
 	$("#closeModal").click();
+	// empty inputs
 	$("#name").val('');
 	$("#description").val('');
 	$("#eachBonus").val('');
@@ -324,7 +374,12 @@ function recoverModalAfterPublishTask(cc, dc, cc_progress, dc_progress, cc_icon,
 	for (var i = $(".contract_var").length - 1; i >= 1; i--) {
 		$(".contract_var").eq(i).remove();
 	}
-	$(".contract_var:eq(0)").find("input:eq(0)").val('');
+	var el = $(".contract_var").eq(0);
+	el.find('button.var_type:eq(0)').text('int');
+	el.find('button.var_property:eq(0)').text('public');
+	el.find('input.var_name:eq(0)').val('');
+	el.find('input.var_value:eq(0)').val('');
+	// recover progress
 	$(".progress:eq(0)").hide();
 	cc.text('正在编译合约');
 	cc_progress.css('width','0%');

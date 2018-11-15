@@ -54,37 +54,30 @@
                 <p class="list-group-item-text">智能合约地址：<span style="color: #3498db">{{el.contract}}</span></p>
                 <p class="list-group-item-text">任务描述：{{el.description}}</p>
                 <button type="button" class="btn btn-primary taskDetailInfo" style="position: absolute;right: 10px;top: 10px">查看详细内容</button>
-                <button type="button" class="btn btn-primary" style="position: absolute;right: 130px;top: 10px" data-toggle="modal" data-target=".bs-example-modal-lg">提交任务数据</button>
+                <button type="button" class="btn btn-success commitData" style="position: absolute;right: 130px;top: 10px" ms-if="el.status==1">提交任务数据</button>
               </a>
             </div>
           </div>
         </div>
       </div>
       <!-- Large modal -->
-      <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+      <button type="button" class="btn btn-primary" id="commitDataModal" data-toggle="modal" data-target=".bs-example-modal-lg" style="display: none"></button>
+      <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" ms-controller="submitDataModal">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-              <h4 class="modal-title" id="myLargeModalLabel">感知任务1：提交感知数据</h4>
+              <h4 class="modal-title" id="myLargeModalLabel">{{@taskname}}：提交感知数据</h4>
             </div>
             <div class="modal-body">
               <h4>提交任务数据接口</h4>
-              <div class="input-group" style="margin-bottom: 15px;margin-top: 15px;">
-                <span class="input-group-addon" id="sizing-addon1">WiFi SSID</span>
-                <input type="text" class="form-control" placeholder="SSID" aria-describedby="sizing-addon1">
-              </div>
-              <div class="input-group" style="margin-bottom: 15px">
-                <span class="input-group-addon" id="sizing-addon2">信号强度</span>
-                <input type="text" class="form-control" placeholder="dBm" aria-describedby="sizing-addon2">
-              </div>
-              <div class="input-group" style="margin-bottom: 15px">
-                <span class="input-group-addon" id="sizing-addon3">GPS坐标</span>
-                <input type="text" class="form-control" placeholder="latitude, longitude" aria-describedby="sizing-addon3">
+              <div class="input-group inputs-item" style="margin-bottom: 15px;" ms-for="el in @data">
+                <span class="input-group-addon">{{el.name}}</span>
+                <input type="text" class="form-control" ms-attr="{placeholder: el.type}" aria-describedby="sizing-addon1">
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal" id="closeSubmitData">关闭</button>
               <button type="button" class="btn btn-primary" id="submitSensedData">提交</button>
             </div>
           </div>

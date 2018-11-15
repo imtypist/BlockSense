@@ -28,9 +28,9 @@ contract sensingTask{
     }
 
     // construct function
-    event TaskInited(uint rewardUnit, uint rewardNum, string taskDescrip, string name, @inputs);
+    event TaskInited(uint rewardUnit, uint rewardNum, string taskDescrip, string name);
 
-    constructor(uint _rewardUnit, uint _rewardNum, string _taskDescrip, string _name, @_inputs)
+    constructor(uint _rewardUnit, uint _rewardNum, string _taskDescrip, string _name)
         public
         condition(msg.value >= _rewardUnit * _rewardNum)
         payable
@@ -44,7 +44,7 @@ contract sensingTask{
         // customized area
         @initialization
 
-        emit TaskInited(_rewardUnit, _rewardNum, _taskDescrip, _name, @event);
+        emit TaskInited(_rewardUnit, _rewardNum, _taskDescrip, _name);
     }
 
     // abort task
@@ -55,6 +55,7 @@ contract sensingTask{
         onlyRequester
         inState(1)
         condition(dataCount <= rewardNum)
+        payable
     {
         state = 2; // ABORT
         requester.transfer(address(this).balance);
@@ -62,24 +63,25 @@ contract sensingTask{
     }
     
     // workers commit sensing data
-    event DataCommited(bytes32 location, int sensingData, @inputs);
+    event DataCommited(string dataHash, bytes32 location, int sensingData);
     event TaskDone();
 
-    function commitTask(bytes32 _location, int sensingData, @_inputs)
+    function commitTask(string dataHash, bytes32 _location, int sensingData@inputs)
         public
         inState(1)
         condition(dataCount < rewardNum)
+        payable
     {
 
         bytes memory sensingDataCommit = bytes(dataStatus[_location]);
         require(sensingDataCommit.length == 0);
-        require(@additionalCondition);
         require(sensingData @condition);
+        @additionalCondition
         
         dataStatus[_location] = "Committed";
         
         msg.sender.transfer(rewardUnit);
-        emit DataCommited(_location, sensingData, @event);
+        emit DataCommited(dataHash, _location, sensingData);
         
         dataCount += 1;
         if(dataCount == rewardNum){

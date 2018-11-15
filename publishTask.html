@@ -93,20 +93,18 @@
               </div>
               <div class="input-group contract_var" style="margin-bottom: 15px">
                 <div class="input-group-btn">
-                  <button type="button" class="btn btn-default">uint</button>
+                  <button type="button" class="btn btn-default var_type">int</button>
                   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="caret"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                   </button>
                   <ul class="dropdown-menu">
-                    <li><a href="#" class="type_li">uint</a></li>
-                    <li><a href="#" class="type_li">string</a></li>
+                    <li><a href="#" class="type_li">int</a></li>
                     <li><a href="#" class="type_li">bytes32</a></li>
-                    <li><a href="#" class="type_li">address</a></li>
                   </ul>
                 </div>
                 <div class="input-group-btn">
-                  <button type="button" class="btn btn-default">public</button>
+                  <button type="button" class="btn btn-default var_property">public</button>
                   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="caret"></span>
                     <span class="sr-only">Toggle Dropdown</span>
@@ -116,7 +114,8 @@
                     <li><a href="#" class="type_li">private</a></li>
                   </ul>
                 </div>
-                <input type="text" class="form-control" placeholder="variable name">
+                <input type="text" class="form-control var_name" placeholder="variable name" style="width: 50%">
+                <input type="text" class="form-control var_value" placeholder="variable value" style="width: 50%">
                 <button type="button" class="btn btn-danger delete_var" style="position: absolute;right: 0px;z-index: 3;">
                   <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 </button>

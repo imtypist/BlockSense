@@ -15,7 +15,7 @@ function createWindow () {
   win.loadFile('index.html')
 
   // Open the DevTools.
-  win.webContents.openDevTools()
+  win.webContents.openDevTools({mode:'detach'})
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -162,10 +162,30 @@ ipcMain.on('synchronous-compileTask', (event, arg) => {
   })
 })
 
-async function compileTask(condition){ // string type
+async function compileTask(args){ // json string
+  var compileData = JSON.parse(args);
   let source = fs.readFileSync("./dist/contracts/sensingTaskTemplate.sol", 'utf8')
-  var reg = /@condition/;
-  source = source.replace(reg, condition);
+  source = source.replace(/@condition/, compileData['condition']);
+  delete compileData['condition'];
+  var variables = '';
+  var inputs = '';
+  var additionConditions = '';
+  var initialization = ''
+  for(var key in compileData){
+    var temp = compileData[key];
+    variables += temp['type'] + ' ' + temp['property'] + ' ' + key + ';\n    ';
+    if(temp['type'] == 'bytes32'){
+      initialization += key + ' = "' + temp['value'] + '";\n        ';
+    }else{
+      initialization += key + ' = ' + temp['value'] + ';\n        ';
+    }
+    inputs += ', ' + temp['type'] + ' _' + key;
+    additionConditions += 'require(_' + key + ' == ' + key + ');\n        ';
+  }
+  source = source.replace(/@variables/, variables);
+  source = source.replace(/@initialization/, initialization);
+  source = source.replace(/@inputs/, inputs);
+  source = source.replace(/@additionalCondition/, additionConditions);
   let compiledContract;
   try{
     compiledContract = solc.compile(source);
