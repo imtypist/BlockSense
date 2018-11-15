@@ -141,12 +141,15 @@ $(document).on("click",".terminateTask",function(){
 $.fn.modal.Constructor.prototype.enforceFocus = function () {};
 
 $(document).on("click","#publishTask",function(){
+	$(this).attr('disabled','disabled');
+	var that = $(this);
 	var name = $("#name").val();
 	if(!name || name.trim().length == 0){
 		swal({
           type: 'error',
           title: 'Contract name cannot be empty!'
         });
+        $(this).removeAttr('disabled');
         return;
 	}
 	var description = $("#description").val();
@@ -155,6 +158,7 @@ $(document).on("click","#publishTask",function(){
           type: 'error',
           title: 'Task description cannot be empty!'
         });
+        $(this).removeAttr('disabled');
         return;
 	}
 	var eachBonus = parseInt($("#eachBonus").val());
@@ -164,6 +168,7 @@ $(document).on("click","#publishTask",function(){
           type: 'error',
           title: 'Please enter a positive integer!'
         });
+        $(this).removeAttr('disabled');
         return;
 	}
 	var condition = $("#condition").val();
@@ -173,6 +178,7 @@ $(document).on("click","#publishTask",function(){
           type: 'error',
           title: 'You do not write in a correct boolean pattern! (condition symbol + integer)'
         });
+        $(this).removeAttr('disabled');
         return;
 	}
 	swal({
@@ -206,19 +212,24 @@ $(document).on("click","#publishTask",function(){
 						setTimeout(function(){ // meanless sleep
 							var contract_info = ipcRenderer.sendSync('synchronous-compileTask',condition.trim());
 							if(contract_info == -1){ // compile failed
-								cc_progress.removeClass("progress-bar-info").addClass("progress-bar-danger");
+								cc_progress.removeClass("progress-bar-success").addClass("progress-bar-danger");
 								cc_progress.css('width','50%');
 								cc_icon.removeClass("glyphicon-cog").addClass("glyphicon-remove");
 								cc.text("合约编译失败");
-						        return;
+						        swal({
+			                      type: 'error',
+			                      title: 'Compile contract failed!'
+			                    }).then((result) => {
+			                    	recoverModalAfterPublishTask(cc, dc, cc_progress, dc_progress, cc_icon, dc_icon, 1, 1);
+			                    	that.removeAttr('disabled');
+			                    });
 							}else{
-								cc_progress.removeClass("progress-bar-info").addClass("progress-bar-success");
 								cc_progress.css('width','50%');
 								cc_icon.removeClass("glyphicon-cog").addClass("glyphicon-ok");
 								cc.text("合约编译成功");
 								setTimeout(function(){
 									dc_progress.css('width','25%');
-								},500);
+								},800);
 			                	setTimeout(function(){ // meanless sleep again
 									contract_info = JSON.parse(contract_info);
 									let bytecode = contract_info.bytecode;
@@ -237,13 +248,26 @@ $(document).on("click","#publishTask",function(){
 													dc_progress.css('width','50%');
 													dc_icon.removeClass("glyphicon-cog").addClass("glyphicon-ok");
 													dc.text("合约部署成功");
+													swal({
+									                  type: 'success',
+									                  title: 'Depoly contract successfully!'
+									                }).then((result) => {
+									                  recoverModalAfterPublishTask(cc, dc, cc_progress, dc_progress, cc_icon, dc_icon, 0, 0);
+									                  that.removeAttr('disabled');
+									                });
 									        	}else{
 									        		console.log(err);
 									        		dc_progress.removeClass("progress-bar-info").addClass("progress-bar-danger");
 													dc_progress.css('width','50%');
 													dc_icon.removeClass("glyphicon-cog").addClass("glyphicon-remove");
 													dc.text("合约部署失败");
-												    return;
+												    swal({
+								                      type: 'error',
+								                      title: 'Depoly contract failed!'
+								                    }).then((result) => {
+								                    	recoverModalAfterPublishTask(cc, dc, cc_progress, dc_progress, cc_icon, dc_icon, 0, 1);
+								                    	that.removeAttr('disabled');
+								                    });
 									        	}
 										      });
 										  }
@@ -252,7 +276,13 @@ $(document).on("click","#publishTask",function(){
 										  dc_progress.css('width','50%');
 										  dc_icon.removeClass("glyphicon-cog").addClass("glyphicon-remove");
 										  dc.text("合约部署失败");
-									      return;
+									      swal({
+						                    type: 'error',
+						                    title: 'Depoly contract failed!'
+						                  }).then((result) => {
+						                    recoverModalAfterPublishTask(cc, dc, cc_progress, dc_progress, cc_icon, dc_icon, 0, 1);
+						                    that.removeAttr('disabled');
+						                  });
 									   }
 									 });
 								},1500);
@@ -263,10 +293,42 @@ $(document).on("click","#publishTask",function(){
 	                      type: 'error',
 	                      title: 'Password is not correct!'
 	                    })
+	                    that.removeAttr('disabled');
 	                }
 	            })
         	}
         })
       }
     });
-})
+});
+
+function recoverModalAfterPublishTask(cc, dc, cc_progress, dc_progress, cc_icon, dc_icon, cc_status, dc_status){ // success: 0, failure: 1
+	$("#closeModal").click();
+	$("#name").val('');
+	$("#description").val('');
+	$("#eachBonus").val('');
+	$("#dataNumber").val('');
+	$("#condition").val('');
+	for (var i = $(".contract_var").length - 1; i >= 1; i--) {
+		$(".contract_var").eq(i).remove();
+	}
+	$(".contract_var:eq(0)").find("input:eq(0)").val('');
+	$(".progress:eq(0)").hide();
+	cc.text('正在编译合约');
+	cc_progress.css('width','0%');
+	if(cc_status == 1){
+		cc_progress.removeClass("progress-bar-danger").addClass("progress-bar-success");
+		cc_icon.removeClass("glyphicon-remove").addClass("glyphicon-cog");
+	}else if(cc_status == 0){
+		cc_icon.removeClass("glyphicon-ok").addClass("glyphicon-cog");
+		dc.text('正在部署合约');
+		dc_progress.css('width','0%');
+		if(dc_status == 1){
+			dc_progress.removeClass("progress-bar-danger").addClass("progress-bar-info");
+			dc_icon.removeClass("glyphicon-remove").addClass("glyphicon-cog");
+		}else if(dc_status == 0){
+			dc_icon.removeClass("glyphicon-ok").addClass("glyphicon-cog");
+		}
+	}
+	return 0;
+}
