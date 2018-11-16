@@ -400,6 +400,36 @@ function recoverModalAfterPublishTask(cc, dc, cc_progress, dc_progress, cc_icon,
 	return 0;
 }
 
+var sensingDataList = avalon.define({
+	$id: 'sensingDataList',
+	data: []
+})
+
+var dataList = null;
+
 $(document).on("click",'.getSensingData',function(){
+	if(dataList != null) dataList.stopWatching();
+	sensingDataList.data = [];
+	var index = $(this).parent().index();
+	var task_info = taskListInfo.data[index];
+	var abi = JSON.parse(taskListInfo.data[index].abi);
+  	var sensing = web3.eth.contract(abi);
+    var sensingContract = sensing.at(task_info.contract);
+    dataList = sensingContract.DataCommited({}, {fromBlock: 0, toBlock: 'latest'});
+    dataList.watch(function(error, result){
+	  if(!error){
+	  	var sd = JSON.parse(ipcRenderer.sendSync('synchronous-catSensedData', result.args.dataHash));
+	  	var location = -1;
+	  	for (var i = sd.length - 1; i >= 0; i--) {
+	  		if(sd[i].name == '_location'){
+	  			location = sd[i].value;
+	  			break;
+	  		}
+	  	}
+	    sensingDataList.data.push({'hash':result.args.dataHash,'location':location,'data':result.args.sensingData.toString()});
+	  }else{
+	    console.log(error);
+	  }
+	});
 	$('#sensingDataModal').click();
 })

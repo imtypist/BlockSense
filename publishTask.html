@@ -64,14 +64,33 @@
       </div>
       <!-- Large modal for get sensing data -->
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-sensing-modal-lg" style="display: none" id="sensingDataModal"></button>
-      <div class="modal fade bs-sensing-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+      <div class="modal fade bs-sensing-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" ms-controller="sensingDataList">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
               <h4 class="modal-title">收集到的感知数据</h4>
             </div>
-            <div class="modal-body"></div>
+            <div class="modal-body">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>hash pointer (string)</th>
+                    <th>location (bytes32)</th>
+                    <th>sensing data (int256)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ms-for="($index, el) in @data">
+                    <th scope="row">{{$index}}</th>
+                    <td>{{el.hash}}</td>
+                    <td>{{el.location}}</td>
+                    <td>{{el.data}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

@@ -15,7 +15,7 @@ function createWindow () {
   win.loadFile('index.html')
 
   // Open the DevTools.
-  win.webContents.openDevTools({mode:'detach'})
+  win.webContents.openDevTools()
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -71,14 +71,14 @@ async function addSensedData(sensedData){
   const filesAdded = await node.files.add({
     content: Buffer.from(sensedData)
   })
-  console.log('Added file:', filesAdded[0].path, filesAdded[0].hash)
+  // console.log('Added file:', filesAdded[0].path, filesAdded[0].hash)
   return filesAdded[0].hash;
 }
 
 // retrieve data
 async function catSensedData(ipfsHash){
   const fileBuffer = await node.files.cat(ipfsHash);
-  console.log('Added file contents:', fileBuffer.toString())
+  // console.log('Added file contents:', fileBuffer.toString())
   return fileBuffer.toString();
 }
 
