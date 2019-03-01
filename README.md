@@ -47,7 +47,55 @@ $ npm start
 
 两个可能有用的链接：[compiling-native-addon-modules](https://github.com/Microsoft/nodejs-guidelines/blob/master/windows-environment.md#compiling-native-addon-modules),[node-gyp#installation](https://github.com/nodejs/node-gyp#installation), 另外检查路径中不要有中文。
 
-I tried it on Windows and Ubuntu, which indicated that the same error occur on both platforms, i.e., `openssl/rsa.h: No such file`. For Windows, I haven't found a solution, but it is easy to solve on Ubuntu, which just needs a simple command, `sudo apt-get install libssl-dev`.  Waste much time on it!
+Sometimes electron-rebuild results in an error like `openssl/rsa.h: No such file`. 
+For Ubuntu and other Debian based systems run the following command to fix the problem 
+`sudo apt-get install libssl-dev`
+
+For Windows systems, first download and install openSSL libraries from [here](https://slproweb.com/products/Win32OpenSSL.html). Then edit the following file `.\node_modules\ursa-optional\binding.gyp`
+Change the contents of the file to:
+
+```
+{
+  "targets": [
+    {
+      'target_name': 'ursaNative',
+      'sources': [ 'src/ursaNative.cc' ],
+      'conditions': [
+        [ 'OS=="win"', {
+          'defines': [
+            'uint=unsigned int',
+          ],
+          'include_dirs': [
+            # use node's bundled openssl headers platforms
+            'C:\Program Files\OpenSSL-Win64\include',
+                        "<!(node -e \"require('nan')\")"
+          ],
+          'libraries': [
+            '-lC:/Program Files/OpenSSL-Win64/lib/capi.lib',
+            '-lC:/Program Files/OpenSSL-Win64/lib/dasync.lib',
+            '-lC:/Program Files/OpenSSL-Win64/lib/libapps.lib',
+            '-lC:/Program Files/OpenSSL-Win64/lib/libcrypto.lib',
+            '-lC:/Program Files/OpenSSL-Win64/lib/libssl.lib',
+            '-lC:/Program Files/OpenSSL-Win64/lib/libtestutil.lib',
+            '-lC:/Program Files/OpenSSL-Win64/lib/openssl.lib',
+            '-lC:/Program Files/OpenSSL-Win64/lib/ossltest.lib',
+            '-lC:/Program Files/OpenSSL-Win64/lib/padlock.lib',
+            '-lC:/Program Files/OpenSSL-Win64/lib/uitest.lib'
+          ]
+        }, { # OS!="win"
+          'include_dirs': [
+            # use node's bundled openssl headers on Unix platforms
+            '<(node_root_dir)/deps/openssl/openssl/include',
+                        "<!(node -e \"require('nan')\")"
+          ],
+        }],
+      ],
+    }
+  ]
+}
+```
+
+Please note: The installation directory of OpenSSL should match with the path given in the above file.
 
 - **Sweetalert2 text input not clickable/focus when bootstrap modal is open**
 
