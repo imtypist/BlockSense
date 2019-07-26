@@ -2,7 +2,7 @@
   <html>
     <head>
       <meta charset="UTF-8">
-      <title>BlockSense——区块链驱动的去中心化群智感知平台</title>
+      <title>BlockSense——Blockchain Based Trust Crowd-sensing Platform</title>
       <link rel="stylesheet" type="text/css" href="dist/css/bootstrap.min.css">
       <style type="text/css">pre{white-space: pre-wrap;word-wrap: break-word;}</style>
     </head>
@@ -23,26 +23,26 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#">账户 <span class="sr-only">(current)</span></a></li>
-              <li><a href="./taskList.html">所有感知任务列表</a></li>
-              <li><a href="./receivedTask.html">我接受的任务</a></li>
-              <li><a href="./publishTask.html">我发布的任务</a></li>
+              <li class="active"><a href="#">Profile <span class="sr-only">(current)</span></a></li>
+              <li><a href="./taskList.html">Task List</a></li>
+              <li><a href="./receivedTask.html">Your Accepted Task(s)</a></li>
+              <li><a href="./publishTask.html">Your Published Task(s)</a></li>
             </ul>
             <form class="navbar-form navbar-right">
               <div class="form-group">
                 <input type="text" class="form-control" placeholder="Contract address">
               </div>
-              <button type="submit" class="btn btn-default">搜索</button>
+              <button type="submit" class="btn btn-default">Search</button>
             </form>
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
       </nav>
       <div style="height: 595px;width: 100%;padding: 0 20px 0;" ms-controller="account_info">
-        <button type="button" class="btn btn-default" style="position: absolute;top: 72px;right: 20px" id="logout">退出</button>
-        <button type="button" class="btn btn-primary" style="position: absolute;top: 72px;right: 90px">备份私钥</button>
-        <button type="button" class="btn btn-warning" style="position: absolute;top: 125px;right: 20px" ms-if="@data.isMining" disabled><span class="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span> 加入矿工节点</button>
-        <button type="button" class="btn btn-warning" style="position: absolute;top: 125px;right: 20px" ms-if="@data.isMining == false" disabled><span class="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span> 加入矿工节点</button>
-        <p style="position: absolute;top: 135px;right: 165px;color: #7c7c7c;font-size: 12px">当前状态：正在同步#<span style="color: #3498db">{{@data.blockNumber}}</span>区块，<span style="color: #3498db" ms-if="@data.isMining">已开启</span><span style="color: #3498db" ms-if="@data.isMining == false">已开启</span>挖矿</p>
+        <button type="button" class="btn btn-default" style="position: absolute;top: 72px;right: 20px" id="logout">Logout</button>
+        <button type="button" class="btn btn-primary" style="position: absolute;top: 72px;right: 100px">Backup Your Private Key</button>
+        <button type="button" class="btn btn-warning" style="position: absolute;top: 125px;right: 20px" ms-if="@data.isMining" disabled><span class="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span> Be a Miner</button>
+        <button type="button" class="btn btn-warning" style="position: absolute;top: 125px;right: 20px" ms-if="@data.isMining == false" disabled><span class="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span> Be a Miner</button>
+        <p style="position: absolute;top: 135px;right: 150px;color: #7c7c7c;font-size: 12px">Current Status: Syncing # <span style="color: #3498db">{{@data.blockNumber}}</span> blocks, <span style="color: #3498db" ms-if="@data.isMining">is</span><span style="color: #3498db" ms-if="@data.isMining == false">is not</span> mining</p>
         <div class="media">
           <div class="media-left">
             <a href="#">
@@ -55,7 +55,7 @@
             <h4 style="padding-left: 4px">{{@data.value}}<strong style="color: #3498db"> ETHER</strong></h4>
           </div>
         </div>
-        <h3><span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> 转账 Transfer</h3>
+        <h3><span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> Transfer</h3>
         <div class="input-group" style="margin-top: 10px;">
           <span class="input-group-addon" id="basic-addon3">From</span>
           <input type="text" class="form-control" aria-describedby="basic-addon3" ms-attr="{placeholder: @data.address}" disabled>
@@ -69,8 +69,8 @@
           <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" id="transfer_amount">
           <span class="input-group-addon">Wei</span>
         </div>
-        <button type="button" class="btn btn-primary btn-block" id="transfer" style="margin-top: 10px">转账</button>
-        <h3><span class="glyphicon glyphicon-xbt" aria-hidden="true"></span> 我的交易 Transactions</h3>
+        <button type="button" class="btn btn-primary btn-block" id="transfer" style="margin-top: 10px">Transfer</button>
+        <h3><span class="glyphicon glyphicon-xbt" aria-hidden="true"></span> My Transactions</h3>
         <div style="overflow-y: auto;height: 208px" ms-controller="txns">
           <!-- txns repeat -->
           <div class="row" style="height: 70px;margin:auto 0;" ms-for="el in @data">

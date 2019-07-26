@@ -1,4 +1,6 @@
-# BlockSense — A Blockchain-based Decentralized Crowd-sensing System
+# BlockSense: Blockchain Based Trust Crowd-sensing Platform
+
+**Authors: Junqin Huang, Linghe Kong, Long Cheng, Hong-Ning Dai, Xue Liu and Ke Xu**
 
 ### Environment
 

@@ -2,7 +2,7 @@
   <html>
     <head>
       <meta charset="UTF-8">
-      <title>BlockSense——区块链驱动的去中心化群智感知平台</title>
+      <title>BlockSense——Blockchain Based Trust Crowd-sensing Platform</title>
       <link rel="stylesheet" type="text/css" href="dist/css/bootstrap.min.css">
       <style type="text/css">pre{white-space: pre-wrap;word-wrap: break-word;}</style>
     </head>
@@ -23,40 +23,40 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <li><a href="./account.html">账户 <span class="sr-only">(current)</span></a></li>
-              <li><a href="./taskList.html">所有感知任务列表</a></li>
-              <li><a href="./receivedTask.html">我接受的任务</a></li>
-              <li class="active"><a href="#">我发布的任务</a></li>
+              <li><a href="./account.html">Profile <span class="sr-only">(current)</span></a></li>
+              <li><a href="./taskList.html">Task List</a></li>
+              <li><a href="./receivedTask.html">Your Accepted Task(s)</a></li>
+              <li class="active"><a href="#">Your Published Task(s)</a></li>
             </ul>
             <form class="navbar-form navbar-right">
               <div class="form-group">
                 <input type="text" class="form-control" placeholder="Contract address">
               </div>
-              <button type="submit" class="btn btn-default">搜索</button>
+              <button type="submit" class="btn btn-default">Search</button>
             </form>
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
       </nav>
       <div style="height: 595px;width: 100%;padding: 0 20px 0;">
-        <button type="button" class="btn btn-info" style="display: block;margin-bottom: 20px;" data-toggle="modal" data-target=".bs-example-modal-lg"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 发布新任务</button>
+        <button type="button" class="btn btn-info" style="display: block;margin-bottom: 20px;" data-toggle="modal" data-target=".bs-example-modal-lg"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Publish New Task</button>
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title">我发布的感知任务</h3>
+            <h3 class="panel-title">Your Published Task(s)</h3>
           </div>
           <div class="panel-body" style="overflow-y: auto;height: 490px;" ms-controller="taskList">
             <div class="list-group">
               <a href="#" class="list-group-item" ms-for="el in @data">
                 <h4 class="list-group-item-heading">
-                  <span class="label label-success" ms-if="el.status==1">未完成</span>
-                  <span class="label label-danger" ms-if="el.status==3">已完成</span>
-                  <span class="label label-warning" ms-if="el.status==2">已中止</span>
+                  <span class="label label-success" ms-if="el.status==1">Unfinished</span>
+                  <span class="label label-danger" ms-if="el.status==3">Finished</span>
+                  <span class="label label-warning" ms-if="el.status==2">Aborted</span>
                   {{el.name}}
                 </h4>
-                <p class="list-group-item-text">智能合约地址：<span style="color: #3498db">{{el.contract}}</span></p>
-                <p class="list-group-item-text">任务描述：{{el.description}}</p>
-                <button type="button" class="btn btn-primary taskDetailInfo" style="position: absolute;right: 10px;top: 10px">查看详细内容</button>
-                <button type="button" class="btn btn-success getSensingData" style="position: absolute;right: 130px;top: 10px">收集到的数据</button>
-                <button type="button" class="btn btn-danger terminateTask" style="position: absolute;right: 250px;top: 10px" ms-if="el.status==1">中止任务</button>
+                <p class="list-group-item-text">Smart Contract Address: <span style="color: #3498db">{{el.contract}}</span></p>
+                <p class="list-group-item-text">Task Description: {{el.description}}</p>
+                <button type="button" class="btn btn-primary taskDetailInfo" style="position: absolute;right: 10px;top: 10px">View Details</button>
+                <button type="button" class="btn btn-success getSensingData" style="position: absolute;right: 123px;top: 10px">Collected Data</button>
+                <button type="button" class="btn btn-danger terminateTask" style="position: absolute;right: 250px;top: 10px" ms-if="el.status==1">Abort Task</button>
               </a>
             </div>
           </div>
@@ -69,7 +69,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-              <h4 class="modal-title">收集到的感知数据</h4>
+              <h4 class="modal-title">Collected Data</h4>
             </div>
             <div class="modal-body">
               <table class="table table-striped">
@@ -100,28 +100,28 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-              <h4 class="modal-title" id="myLargeModalLabel">发布新感知任务</h4>
+              <h4 class="modal-title" id="myLargeModalLabel">Publish New Task</h4>
             </div>
             <div class="modal-body">
               <div class="input-group" style="margin-bottom: 15px">
-                <span class="input-group-addon" id="sizing-addon1">合约名字</span>
+                <span class="input-group-addon" id="sizing-addon1">Contract Name</span>
                 <input type="text" class="form-control" placeholder="contract name or task name" aria-describedby="sizing-addon1" id="name">
               </div>
               <div class="input-group" style="margin-bottom: 15px">
-                <span class="input-group-addon" id="sizing-addon5">任务描述</span>
+                <span class="input-group-addon" id="sizing-addon5">Task Description</span>
                 <input type="text" class="form-control" placeholder="the brief decription of your task" aria-describedby="sizing-addon3" id="description">
               </div>
               <div class="input-group" style="margin-bottom: 15px">
-                <span class="input-group-addon">任务奖励Token</span>
+                <span class="input-group-addon">Task Rewards</span>
                 <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="which should be a positive number" id="eachBonus">
                 <span class="input-group-addon">Wei</span>
               </div>
               <div class="input-group" style="margin-bottom: 15px">
-                <span class="input-group-addon" id="sizing-addon2">预计收集的数据量</span>
+                <span class="input-group-addon" id="sizing-addon2">Data Amount You Want</span>
                 <input type="text" class="form-control" placeholder="which should be a positive number" aria-describedby="sizing-addon3" id="dataNumber">
               </div>
               <div class="input-group" style="margin-bottom: 15px">
-                <span class="input-group-addon" id="sizing-addon4">数据质量检查策略</span>
+                <span class="input-group-addon" id="sizing-addon4">Data Verification Rules</span>
                 <input type="text" class="form-control" placeholder="which should be a boolean condition, i.e., condition symbol + number, such as '>30'" aria-describedby="sizing-addon3" id="condition">
               </div>
               <div class="input-group contract_var" style="margin-bottom: 15px">
@@ -154,20 +154,20 @@
                 </button>
               </div><!-- /input-group -->
               <button type="button" class="btn btn-info" id="add_contract_var" style="margin-bottom: 15px">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 新增变量
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Variables
               </button>
               <div class="progress" style="display: none">
                 <div class="progress-bar progress-bar-success progress-bar-striped active" style="width: 0%">
-                  <span><span class="glyphicon glyphicon-cog" aria-hidden="true"></span><strong>正在编译合约</strong></span>
+                  <span><span class="glyphicon glyphicon-cog" aria-hidden="true"></span><strong>Compiling Contract</strong></span>
                 </div>
                 <div class="progress-bar progress-bar-info progress-bar-striped active" style="width: 0%">
-                  <span><span class="glyphicon glyphicon-cog" aria-hidden="true"></span><strong>正在部署合约</strong></span>
+                  <span><span class="glyphicon glyphicon-cog" aria-hidden="true"></span><strong>Deploying Contract</strong></span>
                 </div>
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal" id="closeModal">关闭</button>
-              <button type="button" class="btn btn-primary" id="publishTask">发布</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal" id="closeModal">Close</button>
+              <button type="button" class="btn btn-primary" id="publishTask">Publish</button>
             </div>
           </div>
         </div>
@@ -179,33 +179,36 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title" id="myModalLabel"><span class="label label-success" ms-if="@data.status==1">未完成</span>
-                  <span class="label label-danger" ms-if="@data.status==3">已完成</span>
-                  <span class="label label-warning" ms-if="@data.status==2">已中止</span>{{@data.name}}</h4>
+              <h4 class="modal-title" id="myModalLabel">
+                <span class="label label-success" ms-if="@data.status==1">Unfinished</span>
+                <span class="label label-danger" ms-if="@data.status==3">Finished</span>
+                <span class="label label-warning" ms-if="@data.status==2">Aborted</span>
+                {{@data.name}}
+              </h4>
             </div>
             <div class="modal-body">
               <dl class="dl-horizontal">
-                <dt>发布者Address</dt>
+                <dt>Requester's Address</dt>
                 <dd>{{@data.requester}}</dd>
-                <dt>合约地址</dt>
+                <dt>Contract Address</dt>
                 <dd>{{@data.contract}}</dd>
-                <dt>任务描述</dt>
+                <dt>Task Description</dt>
                 <dd>{{@data.description}}</dd>
-                <dt>任务所需数据个数</dt>
+                <dt># Required Data</dt>
                 <dd>{{@data.rewardNum}}</dd>
-                <dt>任务已收集数据个数</dt>
+                <dt># Collected Data</dt>
                 <dd>{{@data.dataCount}}</dd>
-                <dt>任务奖励</dt>
+                <dt>Task Rewards</dt>
                 <dd>{{@data.rewardUnit}} Wei</dd>
               </dl>
               <hr>
-              <strong>合约ABI</strong>
+              <strong>Contract ABI</strong>
               <pre>
 {{@data.abi}}
               </pre>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@
   <html>
     <head>
       <meta charset="UTF-8">
-      <title>BlockSense——区块链驱动的去中心化群智感知平台</title>
+      <title>BlockSense——Blockchain Based Trust Crowd-sensing Platform</title>
       <link rel="stylesheet" type="text/css" href="dist/css/bootstrap.min.css">
       <style type="text/css">pre{white-space: pre-wrap;word-wrap: break-word;}</style>
     </head>
@@ -12,21 +12,21 @@
           <div class="col-md-8">
             <div class="container">
               <h1>BlockSense <span class="label label-info" style="font-size: 16px">beta</span></h1>
-              <p>由区块链驱动的去中心化的群智感知平台，同时引入离链存储来拓展区块链的存储能力。通过区块链和智能合约技术，用户可以作为requester在平台轻松地发布自定义的感知任务，也可以作为worker接受自己感兴趣的任务获得Token奖励。</p>
+              <p>We propose a blockchain-based crowd-sensing platform (BlockSense) to make up for the paucity of security in traditional crowd-sensing systems. Different from traditional crowd-sensing platforms, we introduce a new role, miner, to help requesters verify the sensing data quality.</p>
             </div>
           </div>
           <div class="col-md-4">
             <div class="container">
               <form class="form-signin">
-                <h2 class="form-signin-heading">创建新的账户</h2>
+                <h2 class="form-signin-heading">Create a new account</h2>
                 <label for="inputPassword" class="sr-only">Password</label>
                 <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
                 <label for="repeatPassword" class="sr-only">Repeat password</label>
                 <input type="password" id="repeatPassword" class="form-control" placeholder="Repeat password" required="">
                 <div class="checkbox">
-                  <a href="./index.html"><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> 导入现有的账户</a>
+                  <a href="./index.html"><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> Import your existing account(s)</a>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block" type="button" id="signup">创建</button>
+                <button class="btn btn-lg btn-primary btn-block" type="button" id="signup">Sign Up</button>
               </form>
             </div>
           </div>
@@ -34,7 +34,7 @@
       </div>
       <div class="row" style="margin: auto 5px">
         <div class="col-md-6">
-          <h3><span class="glyphicon glyphicon-sort-by-order-alt" aria-hidden="true"></span> 区块 Blocks</h3>
+          <h3><span class="glyphicon glyphicon-sort-by-order-alt" aria-hidden="true"></span> Block List</h3>
           <div style="overflow-y: auto;height: 295px" ms-controller="blocks">
             <!-- blocks repeat -->
             <div class="row" style="margin:15px 10px 15px 0;" ms-for="el in @data">
@@ -51,7 +51,7 @@
           </div>
         </div>
         <div class="col-md-6">
-          <h3><span class="glyphicon glyphicon-xbt" aria-hidden="true"></span> 交易 Transactions</h3>
+          <h3><span class="glyphicon glyphicon-xbt" aria-hidden="true"></span> Transaction List</h3>
           <div style="overflow-y: auto;height: 295px" ms-controller="txns">
             <!-- txns repeat -->
             <div class="row" style="height: 80px;margin:15px 10px 15px 0;" ms-for="el in @data">
