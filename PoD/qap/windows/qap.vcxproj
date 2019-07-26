@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A5448023-2FD4-4AE4-A658-5D127A525F21}</ProjectGuid>
+    <RootNamespace>qapv2</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+      <Profile>true</Profile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\common;C:\Program Files\boost\boost_1_51;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;WIN64;_AMD64_;_DEBUG;_CONSOLE;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Program Files\boost\boost_1_51\lib;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+      <Profile>true</Profile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+      <Profile>true</Profile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\..\common;C:\Program Files\boost\boost_1_51;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;WIN64;_AMD64_;_CONSOLE;NDEBUG;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>C:\Program Files\boost\boost_1_51\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+      <Profile>true</Profile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\common\wire-io.h" />
+    <ClInclude Include="..\..\common\timer.h" />
+    <ClInclude Include="..\Archive.h" />
+    <ClInclude Include="..\Archiver.h" />
+    <ClInclude Include="..\bigpriv.h" />
+    <ClInclude Include="..\BoolCircuit.h" />
+    <ClInclude Include="..\BoolGate.h" />
+    <ClInclude Include="..\BoolPoly.h" />
+    <ClInclude Include="..\BoolWire.h" />
+    <ClInclude Include="..\Circuit.h" />
+    <ClInclude Include="..\CircuitBinaryAdder.h" />
+    <ClInclude Include="..\CircuitMatrixMultiply.h" />
+    <ClInclude Include="..\CircuitMul2.h" />
+    <ClInclude Include="..\Encoding.h" />
+    <ClInclude Include="..\Field.h" />
+    <ClInclude Include="..\FileArchiver.h" />
+    <ClInclude Include="..\Gate.h" />
+    <ClInclude Include="..\GateAddConst.h" />
+    <ClInclude Include="..\GateAddN.h" />
+    <ClInclude Include="..\GateBitSel.h" />
+    <ClInclude Include="..\GateBitSplitMany.h" />
+    <ClInclude Include="..\GateBoolAND.h" />
+    <ClInclude Include="..\GateBoolNAND.h" />
+    <ClInclude Include="..\GateBoolOR.h" />
+    <ClInclude Include="..\GateBoolXOR.h" />
+    <ClInclude Include="..\GateMul2.h" />
+    <ClInclude Include="..\GateMulConst.h" />
+    <ClInclude Include="..\Keys.h" />
+    <ClInclude Include="..\mod1.h" />
+    <ClInclude Include="..\modfft.h" />
+    <ClInclude Include="..\Network.h" />
+    <ClInclude Include="..\Poly.h" />
+    <ClInclude Include="..\PolyTree.h" />
+    <ClInclude Include="..\Proof.h" />
+    <ClInclude Include="..\QAP.h" />
+    <ClInclude Include="..\QSP.h" />
+    <ClInclude Include="..\SparsePolynomial.h" />
+    <ClInclude Include="..\Types.h" />
+    <ClInclude Include="..\Util.h" />
+    <ClInclude Include="..\Wire.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\common\wire-io.c" />
+    <ClCompile Include="..\..\common\timer.cpp" />
+    <ClCompile Include="..\BignumDependencies.cpp" />
+    <ClCompile Include="..\BoolCircuit.cpp" />
+    <ClCompile Include="..\BoolGate.cpp" />
+    <ClCompile Include="..\Circuit.cpp" />
+    <ClCompile Include="..\CircuitBinaryAdder.cpp" />
+    <ClCompile Include="..\CircuitMatrixMultiply.cpp" />
+    <ClCompile Include="..\CircuitMul2.cpp" />
+    <ClCompile Include="..\Encoding.cpp" />
+    <ClCompile Include="..\Field.cpp" />
+    <ClCompile Include="..\FileArchiver.cpp" />
+    <ClCompile Include="..\Gate.cpp" />
+    <ClCompile Include="..\GateAddConst.cpp" />
+    <ClCompile Include="..\GateAddN.cpp" />
+    <ClCompile Include="..\GateBitSel.cpp" />
+    <ClCompile Include="..\GateBitSplitMany.cpp" />
+    <ClCompile Include="..\GateBoolAND.cpp" />
+    <ClCompile Include="..\GateBoolNAND.cpp" />
+    <ClCompile Include="..\GateBoolOR.cpp" />
+    <ClCompile Include="..\GateBoolXOR.cpp" />
+    <ClCompile Include="..\GateMul2.cpp" />
+    <ClCompile Include="..\GateMulConst.cpp" />
+    <ClCompile Include="..\Keys.cpp" />
+    <ClCompile Include="..\main.cpp" />
+    <ClCompile Include="..\mod1.c" />
+    <ClCompile Include="..\modfft.c" />
+    <ClCompile Include="..\Network.cpp" />
+    <ClCompile Include="..\Poly.cpp" />
+    <ClCompile Include="..\PolyTree.cpp" />
+    <ClCompile Include="..\Proof.cpp" />
+    <ClCompile Include="..\QAP.cpp" />
+    <ClCompile Include="..\qsp-tests.cpp" />
+    <ClCompile Include="..\QSP.cpp" />
+    <ClCompile Include="..\SparsePolynomial.cpp" />
+    <ClCompile Include="..\test.cpp" />
+    <ClCompile Include="..\Util.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
