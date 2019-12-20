@@ -1,6 +1,6 @@
 #pragma once
 
-#define DATA_LENGTH 300
+#define DATA_LENGTH 500
 #define SIGMA 5
 #define WINDOW_SIZE 5
 

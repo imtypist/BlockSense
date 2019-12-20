@@ -1,14 +1,15 @@
 # -*- coding:utf8 -*-
 
 import csv
-f = open('LTE_input','w+')
+LEN = 500
+f = open('LTE_input_p' + str(LEN),'w+')
 
 with open('LTE.csv','r') as csvFile:
 	readcsv = csv.reader(csvFile)
 	for i, row in enumerate(readcsv):
-		if i == 100:
+		if i == LEN:
 			break
 		f.write(str(i) + " " + str(hex(abs(int(row[9].strip())))) + "\n")
 
-f.write("100 1")
+f.write(str(LEN) + " 1")
 f.close()

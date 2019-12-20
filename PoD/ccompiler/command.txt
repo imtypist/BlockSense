@@ -1,0 +1,3 @@
+python src/vercomp.py input/blocksense.c --il results/blocksense_500.c.il --arith results/blocksense_500.c.p.arith --ignore-overflow False --progress True
+
+pinocchio-v0.5.3.exe --qap --pv --file ccompiler/results/blocksense_500.c.p.arith --input ccompiler/results/inputs/LTE_input_p500 --output ccompiler/results/inputs/LTE_output_p500 --mem 4

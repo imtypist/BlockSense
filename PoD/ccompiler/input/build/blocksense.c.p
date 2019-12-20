@@ -1,8 +1,6 @@
 # 1 "input/blocksense.c"
 # 1 "<built-in>"
 # 1 "<command-line>"
-# 1 "/usr/include/stdc-predef.h" 1 3 4
-# 1 "<command-line>" 2
 # 1 "input/blocksense.c"
 # 1 "input/blocksense-ifc.h" 1
        
@@ -12,11 +10,11 @@
 
 
 struct Input {
- int t[300];
+ int t[500];
 };
 
 struct Output {
- int x[300];
+ int x[500];
 };
 
 void outsource(struct Input *input, struct Output *output);
@@ -25,7 +23,7 @@ void outsource(struct Input *input, struct Output *output);
 void outsource(struct Input *input, struct Output *output)
 {
  int i,j;
- for (i = 5 / 2; i < 300 - 5 / 2; i+=1)
+ for (i = 5 / 2; i < 500 - 5 / 2; i+=1)
  {
   int temp[5];
   for (j = 0; j < 5; j+=1)
@@ -57,7 +55,7 @@ void outsource(struct Input *input, struct Output *output)
  {
   output->x[i] = 0;
  }
- for (i = 300 - 5 / 2; i < 300; i+=1)
+ for (i = 500 - 5 / 2; i < 500; i+=1)
  {
   output->x[i] = 0;
  }
