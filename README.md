@@ -1,7 +1,5 @@
 # BlockSense: Blockchain Based Trustworthy Crowd-sensing Platform
 
-**Authors: Junqin Huang, Linghe Kong, Long Cheng, Hong-Ning Dai, Xue Liu, Ke Xu and Guihai Chen**
-
 ### Environment
 
 ```
