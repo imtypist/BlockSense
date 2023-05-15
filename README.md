@@ -104,3 +104,18 @@ This link is helpful to solve it: [issues#374](https://github.com/sweetalert2/sw
 - **Raise the `exceed gas limit` error**
 
 Just increase the upper bound of gas limit for testrpc or geth client, here I set limit gas to 100000000.
+
+### Cite
+
+```
+@article{HuangTMC2022BlockSense,
+  author={Huang, Junqin and Kong, Linghe and Cheng, Long and Dai, Hong-Ning and Qiu, Meikang and Chen, Guihai and Liu, Xue and Huang, Gang},
+  journal={IEEE Transactions on Mobile Computing}, 
+  title={BlockSense: Towards Trustworthy Mobile Crowdsensing via Proof-of-Data Blockchain}, 
+  year={2022},
+  volume={},
+  number={},
+  pages={1-17},
+  doi={10.1109/TMC.2022.3230758}
+}
+```
